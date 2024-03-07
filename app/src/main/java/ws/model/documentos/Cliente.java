@@ -26,7 +26,6 @@ public class Cliente {
     @Id
     @EqualsAndHashCode.Include
     private String codigo;
-
     private String nombre;
     private String password;
     private String email;
