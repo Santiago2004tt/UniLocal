@@ -10,13 +10,12 @@ import jakarta.validation.constraints.NotEmpty;
 
 public record RegistroClienteDTO(
 
-    @NotBlank @Length(max=50) String nombre,
-    @NotBlank @Length(min=8) String password,
-    @NotBlank @Email String email,
-    @NotBlank String fotoPerfil,
-    @NotBlank String nickname,
-    @NotBlank String ciudad,
-    @NotEmpty ArrayList<String> telefonos 
-) {
+        @NotBlank @Length(max = 50) String nombre,
+        @NotBlank @Length(min = 8) String password,
+        @NotBlank @Email String email,
+        @NotBlank String fotoPerfil,
+        @NotBlank String nickname,
+        @NotBlank String ciudad,
+        @NotEmpty ArrayList<String> telefonos) {
 
-} 
+}

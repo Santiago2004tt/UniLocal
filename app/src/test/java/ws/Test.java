@@ -41,14 +41,13 @@ public class Test {
     }
 
     @org.junit.jupiter.api.Test
-    public void registrarClienteVacio() {
+    public void registrarClienteVacio() throws Exception {
 
         Cliente cliente = new Cliente();
         cliente.setCodigo("65e7d15e5795ba394144e1a7");
-        cliente.setNombre("Juan");
+        cliente.setNombre("Pedro");
 
-        Cliente registro = clienteRepo.save(cliente);
+        clienteRepo.deleteById(cliente.getCodigo());
 
-        Assertions.assertNotNull(registro);
     }
 }

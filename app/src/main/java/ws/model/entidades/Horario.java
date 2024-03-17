@@ -1,6 +1,6 @@
 package ws.model.entidades;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import lombok.*;
 
@@ -10,7 +10,7 @@ import lombok.*;
 @Setter
 @ToString
 public class Horario {
-    private LocalDateTime horaInicio;
-    private LocalDateTime horaFin;
+    private LocalTime horaInicio;
+    private LocalTime horaFin;
     private String dia;
 }

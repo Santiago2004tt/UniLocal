@@ -36,5 +36,6 @@ public class Cliente {
     private ArrayList<String> telefonos = new ArrayList<>();
     private ArrayList<Bloqueo> bloqueos = new ArrayList<>();
     private ArrayList<String> favortios = new ArrayList<>();
+    private ArrayList<String> historial = new ArrayList<>();
 
 }

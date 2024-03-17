@@ -1,7 +1,13 @@
 package ws.dto;
 
-public record ActualizarNegocioDTO (
-    
-) {
+import org.hibernate.validator.constraints.Length;
+import jakarta.validation.constraints.NotBlank;
+
+public record ActualizarNegocioDTO(
+        @NotBlank String codigo,
+        @NotBlank @Length(max = 50) String nombre,
+        @NotBlank String fotoPerfil,
+        @NotBlank String nickname,
+        @NotBlank String ciudad) {
 
 }
