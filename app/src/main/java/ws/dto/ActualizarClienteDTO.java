@@ -6,8 +6,9 @@ import jakarta.validation.constraints.NotBlank;
 
 public record ActualizarClienteDTO(
 
-                @NotBlank @Length(max = 50) String nombre,
-                @NotBlank String fotoPerfil,
-                @NotBlank String nickname,
-                @NotBlank String ciudad) {
+            @NotBlank String codigo,
+            @NotBlank @Length(max = 50) String nombre,
+            @NotBlank String fotoPerfil,
+            @NotBlank String nickname,
+            @NotBlank String ciudad) {
 }

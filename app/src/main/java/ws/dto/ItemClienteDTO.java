@@ -2,9 +2,8 @@ package ws.dto;
 
 import org.hibernate.validator.constraints.Length;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
+
 
 public record ItemClienteDTO(
         @NotBlank  String codigo,

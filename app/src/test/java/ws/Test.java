@@ -21,7 +21,7 @@ public class Test {
     public void registrarCliente() {
 
         Cliente cliente = new Cliente("1", "Juan", "123", "juan@", "null", "juanito", "Armenia", EstadoRegistro.ACTIVO,
-                new ArrayList<String>(), new ArrayList<Bloqueo>(), new ArrayList<String>());
+                new ArrayList<String>(), new ArrayList<Bloqueo>(), new ArrayList<String>(), null);
 
         Cliente registro = clienteRepo.save(cliente);
 
@@ -32,7 +32,7 @@ public class Test {
     public void actualizarCliente() {
 
         Cliente cliente = new Cliente("1", "Juan", "123", "juan@", "null", "juanito", "Armenia", EstadoRegistro.ACTIVO,
-                new ArrayList<String>(), new ArrayList<Bloqueo>(), new ArrayList<String>());
+                new ArrayList<String>(), new ArrayList<Bloqueo>(), new ArrayList<String>(), null);
 
         cliente.setNombre("Jere");
         Cliente registro = clienteRepo.save(cliente);

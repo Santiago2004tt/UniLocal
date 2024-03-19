@@ -66,7 +66,8 @@ public class ClienteServicioImpl implements ClienteServicio{
         cliente.setEmail(registroClienteDTO.email());
         cliente.setPassword(registroClienteDTO.password());
         cliente.setEstadoRegistro(EstadoRegistro.ACTIVO);
-
+        
+        clienteRepo.save(cliente);
     }
 
     private boolean verificarNickNameExiste(@NotBlank String nickname) {
@@ -79,11 +80,11 @@ public class ClienteServicioImpl implements ClienteServicio{
     }
 
     @Override
-    public void editarPerfil(ActualizarClienteDTO actualizarClienteDTO) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'editarPerfil'");
+    public void editarPerfil(ActualizarClienteDTO actualizarClienteDTO) throws Exception {
+        
     }
 
+    
     @Override
     public DetalleClienteDTO obtenerCliente(String codigo) throws Exception {
         Optional<Cliente> optionalCLiente = clienteRepo.findById(codigo);
@@ -98,9 +99,16 @@ public class ClienteServicioImpl implements ClienteServicio{
     }
 
     @Override
-    public void eliminarCliente(String codigo) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eliminarCliente'");
+    public void eliminarCliente(String codigo) throws Exception{
+        Optional<Cliente> clienteOptional = clienteRepo.findById(codigo);
+        
+        if(clienteOptional.isEmpty()){
+            throw new Exception("El cliente no se a encontrado");
+        }
+        
+        Cliente cliente = clienteOptional.get();
+        cliente.setEstadoRegistro(EstadoRegistro.INACTIVO);
+        clienteRepo.save(cliente);
     }
 
     @Override

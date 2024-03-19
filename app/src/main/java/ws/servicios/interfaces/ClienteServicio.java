@@ -6,7 +6,7 @@ import ws.dto.ActualizarClienteDTO;
 import ws.dto.DetalleClienteDTO;
 import ws.dto.ItemClienteDTO;
 import ws.dto.RegistroClienteDTO;
-import ws.model.documentos.Cliente;
+
 
 public interface ClienteServicio extends CuentaServicio{
 

@@ -20,12 +20,13 @@ import ws.model.enums.EstadoRegistro;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@EqualsAndHashCode(String string, String string2, String string3, String string4, String string5, String string6, String string7, EstadoRegistro activo, ArrayList<String> arrayList, ArrayList<Bloqueo> arrayList2, ArrayList<String> arrayList3onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cliente {
 
     @Id
     @EqualsAndHashCode.Include
     private String codigo;
+    
     private String nombre;
     private String password;
     private String email;
