@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
+import org.junit.jupiter.api.Test;
 import com.mongodb.assertions.Assertions;
 import ws.model.documentos.Cliente;
 import ws.model.entidades.Bloqueo;
@@ -12,12 +12,12 @@ import ws.model.enums.EstadoRegistro;
 import ws.repositorio.ClienteRepo;
 
 @SpringBootTest
-public class Test {
+public class ProyectoTest {
 
     @Autowired
     private ClienteRepo clienteRepo;
 
-    @org.junit.jupiter.api.Test
+    @Test
     public void registrarCliente() {
 
         Cliente cliente = new Cliente("1", "Juan", "123", "juan@", "null", "juanito", "Armenia", EstadoRegistro.ACTIVO,
@@ -28,7 +28,7 @@ public class Test {
         Assertions.assertNotNull(registro);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     public void actualizarCliente() {
 
         Cliente cliente = new Cliente("1", "Juan", "123", "juan@", "null", "juanito", "Armenia", EstadoRegistro.ACTIVO,
@@ -40,7 +40,7 @@ public class Test {
         Assertions.assertNotNull(registro);
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     public void registrarClienteVacio() throws Exception {
 
         Cliente cliente = new Cliente();
