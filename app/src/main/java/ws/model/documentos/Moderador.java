@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import ws.model.enums.EstadoComentario;
+import ws.model.enums.EstadoRegistro;
 
 @Document("Moderadores")
 @Getter
@@ -27,5 +28,5 @@ public class Moderador {
     private String nombre;
     private String password;
     private String email;
-    private EstadoComentario estadoComentario;
+    private EstadoRegistro estadoRegistro;
 }

@@ -30,14 +30,14 @@ public class Negocio {
     @EqualsAndHashCode.Include
     private String codigo;
 
-    private Ubicacion Ubicacion;
     private String nombre;
     private String descripcion;
-    private ArrayList<Horario> horarios = new ArrayList<>();
-    private EstadoRegistro estadoRegistro;
-    private ArrayList<String> imagenes = new ArrayList<>();
-    private ArrayList<HistorialRevision> historialRevisiones = new ArrayList<>();
+    private Ubicacion Ubicacion;
     private String codigoCliente;
     private TipoNegocio tipoNegocio;
+    private EstadoRegistro estadoRegistro;
     private ArrayList<String> telefonos;
+    private ArrayList<Horario> horarios = new ArrayList<>();
+    private ArrayList<String> imagenes = new ArrayList<>();
+    private ArrayList<HistorialRevision> historialRevisiones = new ArrayList<>();
 }

@@ -11,7 +11,6 @@ import lombok.*;
 public class Bloqueo {
 
     private String codigo;
-    private String codigoCliente;
     private LocalDateTime fechaInicio;
     private LocalDateTime fechaFinal;
     private String codigoModerador;
