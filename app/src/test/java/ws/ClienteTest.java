@@ -12,7 +12,7 @@ import ws.model.enums.EstadoRegistro;
 import ws.repositorio.ClienteRepo;
 
 @SpringBootTest
-public class ProyectoTest {
+public class ClienteTest {
 
     @Autowired
     private ClienteRepo clienteRepo;
