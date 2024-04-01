@@ -9,10 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import ws.dto.ActualizarClienteDTO;
-import ws.dto.CambioPassword;
+import ws.dto.CambioPasswordDTO;
 import ws.dto.DetalleClienteDTO;
 import ws.dto.ItemClienteDTO;
-import ws.dto.RegistroClienteDTO;
+import ws.dto.RegistrarClienteDTO;
 import ws.dto.SessionDTO;
 import ws.model.documentos.Cliente;
 import ws.model.enums.EstadoRegistro;
@@ -35,19 +35,19 @@ public class ClienteServicioImpl implements ClienteServicio{
     }
 
     @Override
-    public void enviarLinkRecuperacion(String email) throws Exception {
+    public String enviarCodigoRecuperacion(String email) throws Exception {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'enviarLinkRecuperacion'");
     }
 
     @Override
-    public void cambiarPassword(CambioPassword cambioPassword) throws Exception {
+    public void cambiarPassword(CambioPasswordDTO cambioPassword) throws Exception {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'cambiarPassword'");
     }
 
     @Override
-    public void registrarse(RegistroClienteDTO registroClienteDTO) throws Exception {
+    public void registrarse(RegistrarClienteDTO registroClienteDTO) throws Exception {
         
         if(verificarEmailExistente(registroClienteDTO.email())){
             throw new Exception("El email ya se encuentra registrado");
@@ -79,10 +79,6 @@ public class ClienteServicioImpl implements ClienteServicio{
         return clienteRepo.findByEmail(email).isPresent();
     }
 
-    @Override
-    public void editarPerfil(ActualizarClienteDTO actualizarClienteDTO) throws Exception {
-        
-    }
 
     
     @Override
@@ -123,5 +119,24 @@ public class ClienteServicioImpl implements ClienteServicio{
         }
         return items;    
     }
+
+    @Override
+    public void guardarFavorito(String codigoCliente, String codigoNegocio) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'guardarFavorito'");
+    }
+
+    @Override
+    public void quitarFavorito(String codigoCliente, String codigoNegocio) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'quitarFavorito'");
+    }
+
+    @Override
+    public void actualizarPerfil(ActualizarClienteDTO actualizarClienteDTO) throws Exception {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'actualizarPerfil'");
+    }
+
 
 }

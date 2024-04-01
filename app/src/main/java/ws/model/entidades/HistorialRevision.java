@@ -1,6 +1,8 @@
 package ws.model.entidades;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 import ws.model.enums.EstadoNegocio;
 import lombok.*;
 
@@ -13,5 +15,5 @@ public class HistorialRevision {
     private String descripcion;
     private EstadoNegocio estadoNegocio;
     private LocalDateTime fecha;
-    private String codigoModerador;
+    private ArrayList<String> codigoModerador = new ArrayList<>();
 }

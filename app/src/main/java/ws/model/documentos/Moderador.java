@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import ws.model.enums.EstadoComentario;
 import ws.model.enums.EstadoRegistro;
 
 @Document("Moderadores")
