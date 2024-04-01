@@ -138,5 +138,11 @@ public class ClienteServicioImpl implements ClienteServicio{
         throw new UnsupportedOperationException("Unimplemented method 'actualizarPerfil'");
     }
 
+    @Override
+    public boolean verificarBloqueo(String codigoCliente) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'verificarBloqueo'");
+    }
+
 
 }
