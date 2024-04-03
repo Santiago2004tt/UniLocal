@@ -1,7 +1,10 @@
 package ws;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.ArrayList;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.Test;
@@ -10,6 +13,7 @@ import ws.model.documentos.Cliente;
 import ws.model.entidades.Bloqueo;
 import ws.model.enums.EstadoRegistro;
 import ws.repositorio.ClienteRepo;
+import ws.servicios.impl.ClienteServicioImpl;
 
 @SpringBootTest
 public class ClienteTest {
@@ -49,5 +53,15 @@ public class ClienteTest {
 
         clienteRepo.deleteById(cliente.getCodigo());
 
+    }
+
+    @Test
+    public void eliminarCliente() throws Exception{
+        ClienteServicioImpl clienteServicioImpl = new ClienteServicioImpl(clienteRepo);
+    
+        clienteServicioImpl.eliminarCliente("Cliente1");
+        Optional<Cliente> clienteOptional = clienteRepo.findById("Cliente1");
+        Cliente cliente = clienteOptional.get();
+        assertEquals(cliente.getEstadoRegistro(), EstadoRegistro.INACTIVO);
     }
 }

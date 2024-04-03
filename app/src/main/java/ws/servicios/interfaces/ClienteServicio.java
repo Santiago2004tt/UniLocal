@@ -24,6 +24,8 @@ public interface ClienteServicio extends CuentaServicio{
     
     void quitarFavorito(String codigoCliente, String codigoNegocio)throws Exception;
 
-    boolean verificarBloqueo(String codigoCliente);
+    void guardarHistorial(String codigoCliente, String codigoNegocio)throws Exception;
+
+    boolean verificarBloqueo(String codigoCliente)throws Exception;
  
 }
