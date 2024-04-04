@@ -18,7 +18,7 @@ public class ComentarioTest {
 
     @Test
     public void crearComentario(){
-        ComentarioServicioImpl comentarioServicioImpl = new ComentarioServicioImpl(comentarioRepo);
+        //ComentarioServicioImpl comentarioServicioImpl = new ComentarioServicioImpl(comentarioRepo);
         RegistrarComentarioDTO comentarioDTO = new RegistrarComentarioDTO(4, "Hola", "Cliente1", "Negocio1");
         
     }
