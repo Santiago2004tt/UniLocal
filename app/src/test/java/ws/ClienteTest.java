@@ -3,15 +3,15 @@ package ws;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.Test;
-import com.mongodb.assertions.Assertions;
-
 import ws.dto.ActualizarClienteDTO;
+import ws.dto.ItemClienteDTO;
 import ws.dto.RegistrarClienteDTO;
 import ws.model.documentos.Cliente;
 import ws.model.entidades.Bloqueo;
@@ -68,5 +68,60 @@ public class ClienteTest {
         Optional<Cliente> clienteOptional = clienteRepo.findById("Cliente1");
         Cliente cliente = clienteOptional.get();
         assertEquals(cliente.getEstadoRegistro(), EstadoRegistro.INACTIVO);
+    }
+
+    @Test
+    public void listarClientes(){
+        ClienteServicioImpl clienteServicioImpl = new ClienteServicioImpl(clienteRepo);
+
+        List<ItemClienteDTO> lista = clienteServicioImpl.listarClientes();
+
+        assertEquals(lista.size(), 3);
+    }
+
+    @Test
+    public void guardarHistorial() throws Exception{
+        ClienteServicioImpl clienteServicioImpl = new ClienteServicioImpl(clienteRepo);
+        
+        for(int i = 0; i<16; i++){
+            clienteServicioImpl.guardarHistorial("Cliente1", i+"");
+        }
+        clienteServicioImpl.eliminarCliente("Cliente1");
+        Optional<Cliente> clienteOptional = clienteRepo.findById("Cliente1");
+        Cliente cliente = clienteOptional.get();
+
+        assertEquals(cliente.getHistorial().size(), 10);
+    }
+
+    @Test
+    public void verificarBloqueoActual() throws Exception{
+        ClienteServicioImpl clienteServicioImpl=new ClienteServicioImpl(clienteRepo);
+
+        Bloqueo bloqueo = new Bloqueo();
+        bloqueo.setCodigo("Bloque2");
+        LocalDateTime fechaInicio =  LocalDateTime.of(2024, 4, 2, 15, 30, 0);
+        LocalDateTime fechaFinal =  LocalDateTime.of(2024, 4, 7, 15, 30, 0);
+        bloqueo.setFechaInicio(fechaInicio);
+        bloqueo.setFechaFinal(fechaFinal);
+        bloqueo.setCodigoModerador("moderador1");
+        bloqueo.setMotivo("Hablar de mala manera");
+    
+        Optional<Cliente> clienteOptional = clienteRepo.findById("Cliente1");
+        Cliente cliente = clienteOptional.get();
+        cliente.getBloqueos().add(bloqueo);
+        clienteRepo.save(cliente);
+
+        boolean bloqueado = clienteServicioImpl.verificarBloqueo("Cliente1");
+        
+        assertEquals(bloqueado, true);
+    }
+
+    @Test
+    public void verificarBloqueoSinBloqueos() throws Exception{
+        ClienteServicioImpl clienteServicioImpl = new ClienteServicioImpl(clienteRepo);
+
+        boolean bloqueado=clienteServicioImpl.verificarBloqueo("Cliente3");
+
+        assertEquals(bloqueado, false);
     }
 }

@@ -26,13 +26,13 @@ public interface NegocioServicio {
 
     void cambiarEstado(EstadoNegocio estadoNegocio)throws Exception;
 
-    List<ItemNegocioDTO> recomendarLugares()throws Exception;
+    List<ItemNegocioDTO> recomendarLugares(String codigoUsuario)throws Exception;
 
     List<ItemNegocioDTO> filtrarNegociosCategoria(TipoNegocio tipoNegocio, Ubicacion ubicacion)throws Exception;
     
     List<ItemNegocioDTO> filtrarPopularidad(int popularidad)throws Exception;
 
-    List<ItemNegocioDTO> filtrarDistancia()throws Exception;
+    List<ItemNegocioDTO> filtrarDistancia(Ubicacion ubicacion)throws Exception;
     
     List<ItemNegocioDTO> listarNegocios()throws Exception;
 
@@ -40,7 +40,7 @@ public interface NegocioServicio {
 
     List<ItemNegocioDTO> listarPeticiones()throws Exception;
 
-    int calcularPuntuacion(String codigoNegocio, int puntuacion)throws Exception;
+    int calcularPuntuacion(String codigoNegocio, int puntuacion)throws Exception; //comentario
 
     String verificarAbierto(String codigoNegocio)throws Exception;
 

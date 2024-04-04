@@ -8,7 +8,7 @@ import ws.dto.RegistrarComentarioDTO;
 
 public interface ComentarioServicio {
 
-    void crearComentario(RegistrarComentarioDTO RegistrarComentarioDTO)throws Exception;
+    void crearComentario(RegistrarComentarioDTO registrarComentarioDTO)throws Exception;
     
     void eliminarComentario(String codigoComentario) throws Exception;
 
@@ -16,5 +16,5 @@ public interface ComentarioServicio {
 
     List<ItemComentarioDTO> listarComentarios(String codigoNegocio)throws Exception;
 
-    DetalleComentarioDTO obtenerComentario(String CodigoComentario)throws Exception;
+    DetalleComentarioDTO obtenerComentario(String codigoComentario)throws Exception;
 }

@@ -6,6 +6,10 @@ import jakarta.validation.constraints.NotNull;
 public record RegistrarComentarioDTO(
 
         @NotNull int calificacion,
-        @NotBlank String mensaje) {
+        @NotBlank String mensaje,
+        @NotBlank String codigoCliente,
+        @NotBlank String codigoNegocio
+        
+        ) {
 
 }
