@@ -1,6 +1,7 @@
 package ws;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.Test;
 import com.mongodb.assertions.Assertions;
+
+import ws.dto.ActualizarClienteDTO;
+import ws.dto.RegistrarClienteDTO;
 import ws.model.documentos.Cliente;
 import ws.model.entidades.Bloqueo;
 import ws.model.enums.EstadoRegistro;
@@ -21,38 +25,39 @@ public class ClienteTest {
     @Autowired
     private ClienteRepo clienteRepo;
 
-    @Test
-    public void registrarCliente() {
-
-        Cliente cliente = new Cliente("1", "Juan", "123", "juan@", "null", "juanito", "Armenia", EstadoRegistro.ACTIVO,
-                new ArrayList<String>(), new ArrayList<Bloqueo>(), new ArrayList<String>(), null);
-
-        Cliente registro = clienteRepo.save(cliente);
-
-        Assertions.assertNotNull(registro);
-    }
+    
 
     @Test
     public void actualizarCliente() {
+        ClienteServicioImpl clienteServicioImpl = new ClienteServicioImpl(clienteRepo);
 
-        Cliente cliente = new Cliente("1", "Juan", "123", "juan@", "null", "juanito", "Armenia", EstadoRegistro.ACTIVO,
-                new ArrayList<String>(), new ArrayList<Bloqueo>(), new ArrayList<String>(), null);
-
-        cliente.setNombre("Jere");
-        Cliente registro = clienteRepo.save(cliente);
-
-        Assertions.assertNotNull(registro);
+        try{
+        ActualizarClienteDTO actualizarClienteDTO = new ActualizarClienteDTO("Cliente3", "Jere", "mi foto", "Jeremias", "armenia");
+        clienteServicioImpl.actualizarPerfil(actualizarClienteDTO);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        Optional<Cliente> clienteActualizadoOptional = clienteRepo.findById("Cliente3");
+        Cliente clienteActualizado = clienteActualizadoOptional.get();
+        
+        assertEquals("Jere", clienteActualizado.getNombre());
     }
 
     @Test
-    public void registrarClienteVacio() throws Exception {
-
-        Cliente cliente = new Cliente();
-        cliente.setCodigo("65e7d15e5795ba394144e1a7");
-        cliente.setNombre("Pedro");
-
-        clienteRepo.deleteById(cliente.getCodigo());
-
+    public void registrarClienteFallo() throws Exception {
+        ClienteServicioImpl clienteServicioImpl = new ClienteServicioImpl(clienteRepo);
+        ArrayList<String> telefonos = new ArrayList<>();
+        telefonos.add("3134125124");
+        telefonos.add("3154115134");
+        RegistrarClienteDTO registrarClienteDTO = new RegistrarClienteDTO("Pepe", "pepito", "juan@email.com", "mi foto", "pepito", "armenia", telefonos);
+        
+        try{
+            clienteServicioImpl.registrarse(registrarClienteDTO);
+            fail("Se esperaba un error");
+        }catch(Exception e){
+            assertEquals("El email ya se encuentra registrado", e.getMessage());
+        }
+        
     }
 
     @Test
