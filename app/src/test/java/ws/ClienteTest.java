@@ -24,12 +24,14 @@ public class ClienteTest {
 
     @Autowired
     private ClienteRepo clienteRepo;
-
+    
+    @Autowired
+    private ClienteServicioImpl clienteServicioImpl;
     
 
     @Test
     public void actualizarCliente() {
-        ClienteServicioImpl clienteServicioImpl = new ClienteServicioImpl(clienteRepo);
+        
 
         try{
         ActualizarClienteDTO actualizarClienteDTO = new ActualizarClienteDTO("Cliente3", "Jere", "mi foto", "Jeremias", "armenia");
@@ -45,7 +47,6 @@ public class ClienteTest {
 
     @Test
     public void registrarClienteFallo() throws Exception {
-        ClienteServicioImpl clienteServicioImpl = new ClienteServicioImpl(clienteRepo);
         ArrayList<String> telefonos = new ArrayList<>();
         telefonos.add("3134125124");
         telefonos.add("3154115134");
@@ -62,7 +63,6 @@ public class ClienteTest {
 
     @Test
     public void eliminarCliente() throws Exception{
-        ClienteServicioImpl clienteServicioImpl = new ClienteServicioImpl(clienteRepo);
     
         clienteServicioImpl.eliminarCliente("Cliente1");
         Optional<Cliente> clienteOptional = clienteRepo.findById("Cliente1");
@@ -72,7 +72,6 @@ public class ClienteTest {
 
     @Test
     public void listarClientes(){
-        ClienteServicioImpl clienteServicioImpl = new ClienteServicioImpl(clienteRepo);
 
         List<ItemClienteDTO> lista = clienteServicioImpl.listarClientes();
 
@@ -81,7 +80,6 @@ public class ClienteTest {
 
     @Test
     public void guardarHistorial() throws Exception{
-        ClienteServicioImpl clienteServicioImpl = new ClienteServicioImpl(clienteRepo);
         
         for(int i = 0; i<16; i++){
             clienteServicioImpl.guardarHistorial("Cliente1", i+"");
@@ -95,7 +93,6 @@ public class ClienteTest {
 
     @Test
     public void verificarBloqueoActual() throws Exception{
-        ClienteServicioImpl clienteServicioImpl=new ClienteServicioImpl(clienteRepo);
 
         Bloqueo bloqueo = new Bloqueo();
         bloqueo.setCodigo("Bloque2");
@@ -118,7 +115,6 @@ public class ClienteTest {
 
     @Test
     public void verificarBloqueoSinBloqueos() throws Exception{
-        ClienteServicioImpl clienteServicioImpl = new ClienteServicioImpl(clienteRepo);
 
         boolean bloqueado=clienteServicioImpl.verificarBloqueo("Cliente3");
 

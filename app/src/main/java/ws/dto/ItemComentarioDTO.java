@@ -6,7 +6,8 @@ public record ItemComentarioDTO(
 
     @NotBlank String codigo,
     @NotBlank int calificacion,
-    @NotBlank String mensaje
+    @NotBlank String mensaje,
+    @NotBlank String respuesta
 ) {
 
 }

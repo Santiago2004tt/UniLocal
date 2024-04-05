@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import lombok.RequiredArgsConstructor;
 import ws.dto.ActualizarClienteDTO;
 import ws.dto.CambioPasswordDTO;
 import ws.dto.DetalleClienteDTO;
@@ -22,16 +23,13 @@ import ws.repositorio.ClienteRepo;
 import ws.servicios.interfaces.ClienteServicio;
 
 @Service
+@RequiredArgsConstructor
 @Transactional
 public class ClienteServicioImpl implements ClienteServicio{
 
     private final ClienteRepo clienteRepo; //El repositorio
     
-    //El constructor
-    public ClienteServicioImpl(ClienteRepo clienteRepo){
-        this.clienteRepo = clienteRepo;
-    }
-
+    
     @Override
     public void iniciarSesion(SessionDTO sessionDTO) throws Exception {
         

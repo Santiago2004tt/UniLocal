@@ -8,7 +8,8 @@ public record DetalleComentarioDTO(
     @NotBlank int calificacion,
     @NotBlank String codigoCliente,
     @NotBlank String codigoNegocio,
-    @NotBlank String mensaje
+    @NotBlank String mensaje,
+    @NotBlank String respuesta
 
 ) {
 

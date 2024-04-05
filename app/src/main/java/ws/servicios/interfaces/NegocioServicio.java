@@ -18,7 +18,7 @@ public interface NegocioServicio {
 
     void eliminarNegocio(String codigoNegocio)throws Exception;
 
-    ItemNegocioDTO buscarNegocio(String nombreNegocio)throws Exception;
+    DetalleNegocioDTO buscarNegocio(String nombreNegocio)throws Exception;
 
     DetalleNegocioDTO obtenerNegocio(String codigoNegocio)throws Exception;
 

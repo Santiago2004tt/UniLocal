@@ -11,7 +11,8 @@ import ws.model.enums.TipoNegocio;
 
 public record DetalleNegocioDTO(
 
-        @NotBlank String codigo,
+        @NotBlank String codigoNegocio,
+        @NotBlank String codigoCliente,
         @NotNull Ubicacion ubicacion,
         @NotBlank @Length(max = 50) String nombre,
         @NotBlank String descripcion,
