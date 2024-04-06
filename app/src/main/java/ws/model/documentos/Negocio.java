@@ -37,7 +37,7 @@ public class Negocio {
     private TipoNegocio tipoNegocio;
     private EstadoRegistro estadoRegistro;
     private ArrayList<String> telefonos;
-    private HistorialRevision historialRevisiones;
+    private ArrayList <HistorialRevision> historialRevisiones = new ArrayList<>();
     private ArrayList<Horario> horarios = new ArrayList<>();
     private ArrayList<String> imagenes = new ArrayList<>();
 }

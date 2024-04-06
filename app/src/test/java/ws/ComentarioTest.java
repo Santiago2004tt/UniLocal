@@ -6,13 +6,11 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import ws.dto.ActualizarClienteDTO;
 import ws.dto.ActualizarComentarioDTO;
 import ws.dto.ItemComentarioDTO;
 import ws.dto.RegistrarComentarioDTO;
 import ws.repositorio.ComentarioRepo;
-import ws.servicios.impl.ComentarioServicioImpl;
+import ws.servicios.interfaces.ComentarioServicio;
 
 @SpringBootTest
 public class ComentarioTest {
@@ -21,7 +19,7 @@ public class ComentarioTest {
     private ComentarioRepo comentarioRepo;
 
     @Autowired
-    private ComentarioServicioImpl comentarioServicioImpl;
+    private ComentarioServicio comentarioServicioImpl;
 
     @Test
     public void listarComentarios() throws Exception{
@@ -29,6 +27,16 @@ public class ComentarioTest {
         List<ItemComentarioDTO> lista= comentarioServicioImpl.listarComentarios("Negocio1");
         
         assertEquals(lista.size(), 2);
+    }
+    
+    @Test
+    public void agregarComentario(){
+        RegistrarComentarioDTO registrarComentarioDTO= new RegistrarComentarioDTO(4, "Hola", "Cliente1", "Negocio1");
+        try{
+            comentarioServicioImpl.crearComentario(registrarComentarioDTO);
+        }catch(Exception e){
+            fail();
+        }
     }
 
     @Test

@@ -90,7 +90,7 @@ db.Comentarios.insertMany([
         codigoNegocio: 'Negocio1',
         mensaje: 'Hola esta genial',
         respuesta: 'gracias',
-        estadoComentario: 'activo',
+        estadoComentario: 'ACTIVO',
         _class: 'ws.model.documentos.Comentario'
     }
 ]);
@@ -101,7 +101,7 @@ db.Reportes.insertMany([
         horaInicio: new Date(),
         mensaje: 'Irresponsable',
         codigoComentario: 'comentario1',
-        estadoReporte: 'Proceso',
+        estadoReporte: 'PROCESO',
         _class: 'ws.model.documentos.Reportes'
     }
 ])
@@ -112,7 +112,7 @@ db.Moderadores.insertMany([
         nombre: 'pachito',
         password: 'password',
         email: 'hola@gmail.com',
-        estadoRegistro: 'Activo',
+        estadoRegistro: 'ACTIVO',
         _class: 'ws.model.documentos.Moderadores'
     }
 ])

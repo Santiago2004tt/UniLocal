@@ -37,7 +37,9 @@ public class ComentarioServicioImpl implements ComentarioServicio{
         Comentario comentario = new Comentario();
 
         clienteServicio.obtenerCliente(registrarComentarioDTO.codigoCliente());
+        System.out.println("Cliente");
         negocioServicio.obtenerNegocio(registrarComentarioDTO.codigoNegocio());
+        System.out.println("Negocio");
 
         comentario.setCalificacion(registrarComentarioDTO.calificacion());
         comentario.setCodigoCliente(registrarComentarioDTO.codigoCliente());

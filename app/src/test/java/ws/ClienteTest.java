@@ -17,7 +17,7 @@ import ws.model.documentos.Cliente;
 import ws.model.entidades.Bloqueo;
 import ws.model.enums.EstadoRegistro;
 import ws.repositorio.ClienteRepo;
-import ws.servicios.impl.ClienteServicioImpl;
+import ws.servicios.interfaces.ClienteServicio;
 
 @SpringBootTest
 public class ClienteTest {
@@ -26,7 +26,7 @@ public class ClienteTest {
     private ClienteRepo clienteRepo;
     
     @Autowired
-    private ClienteServicioImpl clienteServicioImpl;
+    private ClienteServicio clienteServicioImpl;
     
 
     @Test
@@ -71,7 +71,7 @@ public class ClienteTest {
     }
 
     @Test
-    public void listarClientes(){
+    public void listarClientes() throws Exception{
 
         List<ItemClienteDTO> lista = clienteServicioImpl.listarClientes();
 

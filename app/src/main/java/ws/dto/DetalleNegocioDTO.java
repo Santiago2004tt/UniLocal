@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import ws.model.entidades.HistorialRevision;
 import ws.model.entidades.Horario;
 import ws.model.entidades.Ubicacion;
 import ws.model.enums.TipoNegocio;
@@ -19,7 +20,9 @@ public record DetalleNegocioDTO(
         @NotEmpty ArrayList<Horario> horarios,
         @NotEmpty ArrayList<String> imagenes,
         @NotNull TipoNegocio tipoNegocio,
+        ArrayList<HistorialRevision> historialRevisiones,
         @NotEmpty ArrayList<String> telefonos
+
 ) {
 
 }
