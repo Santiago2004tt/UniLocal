@@ -13,8 +13,9 @@ import ws.model.enums.TipoNegocio;
 
 public record RegistrarNegocioDTO(
         @NotNull Ubicacion ubicacion,
+        @NotBlank String codigoUsuario,
         @NotBlank @Length(max = 50) String nombre,
-        @NotBlank String descripcio,
+        @NotBlank String descripcion,
         @NotEmpty ArrayList<Horario> horarios,
         @NotEmpty ArrayList<String> imagenes,
         @NotNull TipoNegocio tipoNegocio,

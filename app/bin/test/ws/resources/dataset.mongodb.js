@@ -56,26 +56,59 @@ db.Clientes.insertMany([
 
 db.Negocios.insertMany([
     {
-        _id: 'Negocio1',
-        nombre: 'Restaurante Mexicano',
-        descripcion: 'Restaurante de comida mexicana en Armenia',
-        ubicacion: {
-            latitud: 4.540130,
-            longitud: -75.665660
-            },
+        _id:'Negocio1',
+        nombre: 'Las salchipapas',
+        descripcion: 'Ricas',
+        Ubicacion: {
+            longitud: 20,
+            latitud: 40
+        },
         codigoCliente: 'Cliente1',
-        tipoNegocio: 'RESTAURANTE',
-        estadoRegistro: 'ACTIVO',
-        telefonos: ['1234567', '7654321'],
+        tipoNegocio: 'CAFETERIA',
+        estadoNegocio: 'PENDIENTE',
+        telefonos: [
+            '313141254'
+        ],
+        historialRevisiones: [],
         horarios: [
             {
-            dia: 'LUNES',
-            horaInicio: '08:00',
-            horaFin: '20:00'
+                horaInicio: ISODate('2024-04-07T03:55:06.484Z'),
+                horaFin: ISODate('2024-04-07T03:55:06.484Z'),
+                dia: 'Lunes'
             }
         ],
-        imagenes: ['imagen1', 'imagen2'],
+        imagenes: [
+            'Foto'
+        ],
+        _class: 'ws.model.documentos.Negocio'
+    },
+    {
+        _id:'Negocio2',
+        nombre: 'Las tostiempanadas',
+        descripcion: 'Ricas',
+        Ubicacion: {
+            longitud: 20.54,
+            latitud: 40.12
+        },
+        codigoCliente: 'Cliente2',
+        tipoNegocio: 'CAFETERIA',
+        estadoNegocio: 'APROBADO',
+        telefonos: [
+            '313141254',
+            '312351251'
+        ],
         historialRevisiones: [],
+        horarios: [
+            {
+                horaInicio: ISODate('2024-04-07T03:55:06.484Z'),
+                horaFin: ISODate('2024-04-07T03:55:06.484Z'),
+                dia: 'Lunes'
+            }
+        ],
+        imagenes: [
+            'Foto',
+            'otra foto'
+        ],
         _class: 'ws.model.documentos.Negocio'
     }
 ]);

@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +26,10 @@ import ws.servicios.interfaces.NegocioServicio;
 @Transactional
 public class ComentarioServicioImpl implements ComentarioServicio{
     private final ComentarioRepo comentarioRepo;
+
+    @Autowired
     private final ClienteServicio clienteServicio;
+    @Autowired
     private final NegocioServicio negocioServicio;
     
     
@@ -37,9 +42,8 @@ public class ComentarioServicioImpl implements ComentarioServicio{
         Comentario comentario = new Comentario();
 
         clienteServicio.obtenerCliente(registrarComentarioDTO.codigoCliente());
-        System.out.println("Cliente");
+        
         negocioServicio.obtenerNegocio(registrarComentarioDTO.codigoNegocio());
-        System.out.println("Negocio");
 
         comentario.setCalificacion(registrarComentarioDTO.calificacion());
         comentario.setCodigoCliente(registrarComentarioDTO.codigoCliente());

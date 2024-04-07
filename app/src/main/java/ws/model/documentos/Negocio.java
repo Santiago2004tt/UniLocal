@@ -14,6 +14,7 @@ import lombok.ToString;
 import ws.model.entidades.HistorialRevision;
 import ws.model.entidades.Horario;
 import ws.model.entidades.Ubicacion;
+import ws.model.enums.EstadoNegocio;
 import ws.model.enums.EstadoRegistro;
 import ws.model.enums.TipoNegocio;
 
@@ -35,7 +36,7 @@ public class Negocio {
     private Ubicacion Ubicacion;
     private String codigoCliente;
     private TipoNegocio tipoNegocio;
-    private EstadoRegistro estadoRegistro;
+    private EstadoNegocio estadoNegocio;
     private ArrayList<String> telefonos;
     private ArrayList <HistorialRevision> historialRevisiones = new ArrayList<>();
     private ArrayList<Horario> horarios = new ArrayList<>();

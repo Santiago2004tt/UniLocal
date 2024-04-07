@@ -24,17 +24,18 @@ public class ComentarioTest {
     @Test
     public void listarComentarios() throws Exception{
         
-        List<ItemComentarioDTO> lista= comentarioServicioImpl.listarComentarios("Negocio1");
+        List<ItemComentarioDTO> lista= comentarioServicioImpl.listarComentarios("6612191a5f70451d310f368d");
         
-        assertEquals(lista.size(), 2);
+        assertEquals(lista.size(), 1);
     }
     
     @Test
     public void agregarComentario(){
-        RegistrarComentarioDTO registrarComentarioDTO= new RegistrarComentarioDTO(4, "Hola", "Cliente1", "Negocio1");
+        RegistrarComentarioDTO registrarComentarioDTO= new RegistrarComentarioDTO(4, "Hola", "Cliente1", "6612191a5f70451d310f368d");
         try{
             comentarioServicioImpl.crearComentario(registrarComentarioDTO);
         }catch(Exception e){
+            System.out.println(e.getMessage());
             fail();
         }
     }

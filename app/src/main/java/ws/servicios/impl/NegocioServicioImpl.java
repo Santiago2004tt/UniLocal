@@ -3,6 +3,7 @@ package ws.servicios.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import ws.model.entidades.Ubicacion;
 import ws.model.enums.EstadoNegocio;
 import ws.model.enums.TipoNegocio;
 import ws.repositorio.NegocioRepo;
+import ws.servicios.interfaces.ClienteServicio;
 import ws.servicios.interfaces.NegocioServicio;
 
 @Service
@@ -24,10 +26,27 @@ public class NegocioServicioImpl implements NegocioServicio {
 
     private final NegocioRepo negocioRepo;
 
+    @Autowired
+    private final ClienteServicio clienteServicio;
+
     @Override
     public void crearNegocio(RegistrarNegocioDTO registroNegocioDTO) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'crearNegocio'");
+        
+        clienteServicio.obtenerCliente(registroNegocioDTO.codigoUsuario());
+
+        Negocio negocio = new Negocio();
+        negocio.setUbicacion(registroNegocioDTO.ubicacion());
+        negocio.setCodigoCliente(registroNegocioDTO.codigoUsuario());
+        negocio.setNombre(registroNegocioDTO.nombre());
+        negocio.setDescripcion(registroNegocioDTO.descripcion());
+        negocio.setHorarios(registroNegocioDTO.horarios());
+        negocio.setImagenes(registroNegocioDTO.imagenes());
+        negocio.setTipoNegocio(registroNegocioDTO.tipoNegocio());
+        negocio.setTelefonos(registroNegocioDTO.telefonos());
+        negocio.setEstadoNegocio(EstadoNegocio.PENDIENTE);
+
+
+        negocioRepo.save(negocio);
     }
 
     @Override
