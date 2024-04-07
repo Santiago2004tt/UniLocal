@@ -15,7 +15,6 @@ import ws.model.entidades.HistorialRevision;
 import ws.model.entidades.Horario;
 import ws.model.entidades.Ubicacion;
 import ws.model.enums.EstadoNegocio;
-import ws.model.enums.EstadoRegistro;
 import ws.model.enums.TipoNegocio;
 
 @Document("Negocios")
@@ -41,4 +40,5 @@ public class Negocio {
     private ArrayList <HistorialRevision> historialRevisiones = new ArrayList<>();
     private ArrayList<Horario> horarios = new ArrayList<>();
     private ArrayList<String> imagenes = new ArrayList<>();
+    private int popularidad;
 }

@@ -11,7 +11,6 @@ public record ItemNegocioDTO(
     @NotNull Ubicacion ubicacion,
     @NotBlank @Length(max = 50) String nombre,
     @NotBlank String descripcion,
-    @NotBlank boolean abierto,
     @NotBlank String fotoPrimera,
     @NotBlank TipoNegocio tipoNegocio
 ) {

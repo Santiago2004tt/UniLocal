@@ -1,16 +1,18 @@
-package ws.resources;
+package ws;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import ws.dto.DetalleNegocioDTO;
+import ws.dto.ItemNegocioDTO;
 import ws.dto.RegistrarNegocioDTO;
 import ws.model.entidades.Horario;
 import ws.model.entidades.Ubicacion;
@@ -30,7 +32,7 @@ public class NegocioTest {
 
     @Test
     public void crearNegocio(){
-        Ubicacion ubicacion = new Ubicacion(20, 40);
+        Ubicacion ubicacion = new Ubicacion(56, 31);
         Horario horario = new Horario(LocalTime.now(), LocalTime.now(), "Lunes");
         ArrayList<Horario> arrayList = new ArrayList<>();
         arrayList.add(horario);
@@ -38,7 +40,7 @@ public class NegocioTest {
         fotos.add("Foto");
         ArrayList<String> telefonos = new ArrayList<>();
         telefonos.add("313141254");
-        RegistrarNegocioDTO registrarNegocioDTO = new RegistrarNegocioDTO(ubicacion, "Cliente1", "Las salchipapas", "Ricas", arrayList, fotos, TipoNegocio.CAFETERIA, telefonos);
+        RegistrarNegocioDTO registrarNegocioDTO = new RegistrarNegocioDTO(ubicacion, "Cliente2", "Paramericana", "Vengan", arrayList, fotos, TipoNegocio.SUPERMERCADO, telefonos);
 
         try{
             negocioServicio.crearNegocio(registrarNegocioDTO);
@@ -53,6 +55,16 @@ public class NegocioTest {
         try{
             DetalleNegocioDTO detalleNegocioDTO = negocioServicio.obtenerNegocio("6612191a5f70451d310f368d");
             assertEquals(detalleNegocioDTO.nombre(), "Las salchipapas");
+        }catch(Exception e){
+            fail();
+        }
+    }
+
+    @Test
+    public void listarNegociosNombre(){
+        try{
+            List<ItemNegocioDTO> lista = negocioServicio.buscarNegocioNombre("Paramericana");
+            assertEquals(lista.get(0).codigo(), "6612e9096923bd62d2d50936");
         }catch(Exception e){
             fail();
         }

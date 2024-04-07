@@ -1,5 +1,5 @@
 package ws.model.enums;
 
 public enum EstadoNegocio {
-    APROBADO, RECHAZADO, PENDIENTE
+    APROBADO, RECHAZADO, PENDIENTE, INACTIVO
 }

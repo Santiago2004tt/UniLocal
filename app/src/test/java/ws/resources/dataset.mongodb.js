@@ -80,6 +80,8 @@ db.Negocios.insertMany([
         imagenes: [
             'Foto'
         ],
+
+        popularidad: 5,
         _class: 'ws.model.documentos.Negocio'
     },
     {
@@ -109,6 +111,7 @@ db.Negocios.insertMany([
             'Foto',
             'otra foto'
         ],
+        popularidad: 3,
         _class: 'ws.model.documentos.Negocio'
     }
 ]);
