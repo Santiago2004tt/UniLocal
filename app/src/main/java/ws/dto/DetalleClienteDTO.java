@@ -2,6 +2,8 @@ package ws.dto;
 
 import org.hibernate.validator.constraints.Length;
 import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -14,5 +16,8 @@ public record DetalleClienteDTO(
         @NotBlank String fotoPerfil,
         @NotBlank String nickname,
         @NotBlank String ciudad,
-        @NotEmpty ArrayList<String> telefonos) {
+        @NotEmpty ArrayList<String> telefonos,
+        List<String> historial,
+        List<String> favoritos
+        ) {
 } 

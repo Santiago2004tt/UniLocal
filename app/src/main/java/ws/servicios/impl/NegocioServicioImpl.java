@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,12 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import ws.dto.ActualizarNegocioDTO;
 import ws.dto.BuscarNegocioDTO;
+import ws.dto.DetalleClienteDTO;
 import ws.dto.DetalleNegocioDTO;
 import ws.dto.ItemNegocioDTO;
 import ws.dto.RegistrarNegocioDTO;
 import ws.model.documentos.Negocio;
 import ws.model.entidades.Ubicacion;
 import ws.model.enums.EstadoNegocio;
+import ws.model.enums.TipoNegocio;
 import ws.repositorio.NegocioRepo;
 import ws.servicios.interfaces.ClienteServicio;
 import ws.servicios.interfaces.NegocioServicio;
@@ -31,6 +34,9 @@ public class NegocioServicioImpl implements NegocioServicio {
     @Autowired
     private final ClienteServicio clienteServicio;
 
+    /**
+     * metodo para crear un negocio
+     */
     @Override
     public void crearNegocio(RegistrarNegocioDTO registroNegocioDTO) throws Exception {
         
@@ -52,6 +58,9 @@ public class NegocioServicioImpl implements NegocioServicio {
         negocioRepo.save(negocio);
     }
 
+    /**
+     * Metodo para actualizar un negocio
+     */
     @Override
     public void actualizarNegocio(ActualizarNegocioDTO actualizarNegocioDTO) throws Exception {
 
@@ -75,6 +84,9 @@ public class NegocioServicioImpl implements NegocioServicio {
         negocioRepo.save(negocio);
     }
 
+    /**
+     * Metodo para eliminar un negocio
+     */
     @Override
     public void eliminarNegocio(String codigoNegocio) throws Exception {
         Optional<Negocio> negocioOptional = negocioRepo.findById(codigoNegocio);
@@ -88,29 +100,30 @@ public class NegocioServicioImpl implements NegocioServicio {
         negocioRepo.save(negocio);
     }
 
-    
-
+    /**
+     * Metodo que busca un negocio dependiendo el requerimiento puede ser por tipo, nombre o ambas y de estado activo
+     */
     @Override
     public List<ItemNegocioDTO> buscarNegocio(BuscarNegocioDTO buscarNegocioDTO) throws Exception {
         List<ItemNegocioDTO> itemsNegocio = new ArrayList<>();
-        List<Negocio> negocioOptional = negocioRepo.findBusiness(buscarNegocioDTO.nombre(), buscarNegocioDTO.tipoNegocio(), buscarNegocioDTO.popularidad());
+        List<Negocio> negocioOptional = negocioRepo.findBusiness(buscarNegocioDTO.nombre(), buscarNegocioDTO.tipoNegocio());
         if (negocioOptional.isEmpty()) {
             throw new Exception("No se pudo encontrar ningun negocio con las caracteristiacas");
         }
-
-        negocioOptional = ordenarNegociosPorDistancia(buscarNegocioDTO.ubicacion(), negocioOptional);       
-
         for (int i = 0; i < negocioOptional.size(); i++) {
             ItemNegocioDTO itemNegocioDTO = new ItemNegocioDTO(negocioOptional.get(i).getCodigo(), negocioOptional.get(i).getUbicacion(), negocioOptional.get(i).getNombre(), negocioOptional.get(i).getDescripcion(), negocioOptional.get(i).getImagenes().get(0), negocioOptional.get(i).getTipoNegocio());
             itemsNegocio.add(itemNegocioDTO);
         }
-        // TODO Auto-generated method stub
+      
         return itemsNegocio;
     }
 
+    /**
+     * Metodo que obtiene un negocio que este pendiente
+     */
     @Override
     public DetalleNegocioDTO obtenerNegocio(String codigoNegocio) throws Exception {
-        Optional<Negocio> negocioOptional = negocioRepo.findById(codigoNegocio);
+        Optional<Negocio> negocioOptional = negocioRepo.findByNegocioModerador(codigoNegocio);
         
         if(negocioOptional.isEmpty()){
             throw new Exception("No se a encontrado el negocio");
@@ -141,8 +154,44 @@ public class NegocioServicioImpl implements NegocioServicio {
 
     @Override
     public List<ItemNegocioDTO> recomendarLugares(String codigoUsuario, Ubicacion ubicacion) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'recomendarLugares'");
+        List<ItemNegocioDTO> itemsNegocio = new ArrayList<>();
+        DetalleClienteDTO detalleClienteDTO = clienteServicio.obtenerCliente(codigoUsuario);
+        List<String> historial = detalleClienteDTO.historial();
+        
+        
+        if(historial.size() <5){
+            throw new Exception("No hay negocios que recomendrar");
+        }
+
+        String nombre = obtenerNegocioActivo(historial.get(0)).nombre();
+        TipoNegocio tipoNegocio = obtenerNegocioActivo(historial.get(1)).tipoNegocio();
+        String nombre1 = obtenerNegocioActivo(historial.get(2)).nombre();
+        TipoNegocio tipoNegocio1 = obtenerNegocioActivo(historial.get(3)).tipoNegocio();
+        String nombre2 = obtenerNegocioActivo(historial.get(4)).nombre();
+
+        
+        List<Negocio> negocios = negocioRepo.findByRecomendar(nombre, tipoNegocio, nombre1, tipoNegocio1, nombre2);
+        
+        for (int i = 0; i < negocios.size(); i++) {
+            ItemNegocioDTO itemNegocioDTO = new ItemNegocioDTO(negocios.get(i).getCodigo(), negocios.get(i).getUbicacion(), negocios.get(i).getNombre(), negocios.get(i).getDescripcion(), negocios.get(i).getImagenes().get(0), negocios.get(i).getTipoNegocio());
+            itemsNegocio.add(itemNegocioDTO);
+        }
+
+        return itemsNegocio;
+    }
+
+    public TipoNegocio obtenerTipoNegocioRandom() {
+        // Obtener todos los valores del enum
+        TipoNegocio[] valores = TipoNegocio.values();
+        
+        // Crear un objeto Random
+        Random rand = new Random();
+
+        // Generar un índice aleatorio dentro del rango de los valores del enum
+        int indiceAleatorio = rand.nextInt(valores.length);
+        
+        // Devolver el valor del enum correspondiente al índice aleatorio generado
+        return valores[indiceAleatorio];
     }
 
 
@@ -214,8 +263,8 @@ public class NegocioServicioImpl implements NegocioServicio {
      * @param listaNegocios
      * @return
      */
-    public List<Negocio> ordenarNegociosPorDistancia(Ubicacion desdeUbicacion, List<Negocio> listaNegocios) {
-        listaNegocios.sort(Comparator.comparingDouble(negocio -> distanciaEntrePuntos(desdeUbicacion, negocio.getUbicacion())));
+    public List<ItemNegocioDTO> ordenarNegociosPorDistancia(Ubicacion desdeUbicacion, List<ItemNegocioDTO> listaNegocios) {
+        listaNegocios.sort(Comparator.comparingDouble(negocio -> distanciaEntrePuntos(desdeUbicacion, negocio.ubicacion())));
         return listaNegocios;
     }
 
@@ -233,6 +282,18 @@ public class NegocioServicioImpl implements NegocioServicio {
     public DetalleNegocioDTO obtenerNegocioActivo(String codigoNegocio) throws Exception {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'obtenerNegocioActivo'");
+    }
+
+    @Override
+    public List<ItemNegocioDTO> ordenarUbicacion(List<ItemNegocioDTO> listaNegocios) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'ordenarUbicacion'");
+    }
+
+    @Override
+    public List<ItemNegocioDTO> ordenarPuntuacion(List<ItemNegocioDTO> listaNegocios) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'ordenarPuntuacion'");
     }
 
     

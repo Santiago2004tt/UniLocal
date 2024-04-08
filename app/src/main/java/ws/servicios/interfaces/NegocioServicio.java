@@ -38,4 +38,8 @@ public interface NegocioServicio {
     List<ItemNegocioDTO> listarNegociosFavoritos(String codigoCliente, Ubicacion ubicacion)throws Exception;
 
     void agregarPuntuacion(String codigoNegocio, int puntuacion);
+
+    List<ItemNegocioDTO> ordenarUbicacion(List<ItemNegocioDTO> listaNegocios);
+
+    List<ItemNegocioDTO> ordenarPuntuacion(List<ItemNegocioDTO> listaNegocios);
 }

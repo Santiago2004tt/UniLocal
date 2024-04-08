@@ -1,6 +1,7 @@
 package ws.repositorio;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -24,6 +25,13 @@ public interface NegocioRepo extends MongoRepository<Negocio, String> {
 
     List<Negocio> findByEstadoNegocio(EstadoNegocio pendiente);
 
-    @Query("{$or:[{'nombre': ?0}, {'tipoNegocio':?1}, {'popularidad': ?2}], $and:[{'estadoNegocio':'APROBADO'}]}")
-    List<Negocio> findBusiness(String nombre, TipoNegocio tipoNegocio, int popularidad);
+    @Query("{$or:[{'nombre': ?0}, {'tipoNegocio':?1}], $and:[{'estadoNegocio':'APROBADO'}]}")
+    List<Negocio> findBusiness(String nombre, TipoNegocio tipoNegocio);
+
+    @Query("{$and:[{'codigo': ?0}, {'estadoNegocio':'PENDIENTE'}]}")
+    Optional<Negocio> findByNegocioModerador(String codigoNegocio);
+
+    @Query("{or:[{'nombre':?0}, {'tipoNegocio': ?1},{'nombre':?2}, {'tipoNegocio':?3} ,{'nombre':?4} ]}")
+    List<Negocio> findByRecomendar(String nombre, TipoNegocio tipoNegocio, String nombre1, TipoNegocio tipoNegocio1,
+            String nombre2);
 }

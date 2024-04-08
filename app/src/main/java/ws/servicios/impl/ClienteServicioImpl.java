@@ -106,7 +106,7 @@ public class ClienteServicioImpl implements ClienteServicio{
 
         Cliente cliente = optionalCLiente.get();
 
-        return new DetalleClienteDTO(cliente.getNombre(), cliente.getPassword(), cliente.getEmail(), cliente.getFotoPerfil(),cliente.getNickname() , cliente.getCiudad(), cliente.getTelefonos());
+        return new DetalleClienteDTO(cliente.getNombre(), cliente.getPassword(), cliente.getEmail(), cliente.getFotoPerfil(),cliente.getNickname() , cliente.getCiudad(), cliente.getTelefonos(), cliente.getHistorial(), cliente.getFavortios());
     }
 
     /**
