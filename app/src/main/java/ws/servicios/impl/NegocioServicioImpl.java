@@ -1,12 +1,8 @@
 package ws.servicios.impl;
 
-import java.time.DayOfWeek;
-import java.time.LocalTime;
-import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import ws.dto.ActualizarNegocioDTO;
+import ws.dto.BuscarNegocioDTO;
 import ws.dto.DetalleNegocioDTO;
 import ws.dto.ItemNegocioDTO;
 import ws.dto.RegistrarNegocioDTO;
 import ws.model.documentos.Negocio;
-import ws.model.entidades.Horario;
 import ws.model.entidades.Ubicacion;
 import ws.model.enums.EstadoNegocio;
-import ws.model.enums.TipoNegocio;
 import ws.repositorio.NegocioRepo;
 import ws.servicios.interfaces.ClienteServicio;
 import ws.servicios.interfaces.NegocioServicio;
@@ -93,21 +88,23 @@ public class NegocioServicioImpl implements NegocioServicio {
         negocioRepo.save(negocio);
     }
 
+    
+
     @Override
-    public List<ItemNegocioDTO> buscarNegocioNombre(String nombreNegocio,Ubicacion ubicacion) throws Exception {
+    public List<ItemNegocioDTO> buscarNegocio(BuscarNegocioDTO buscarNegocioDTO) throws Exception {
         List<ItemNegocioDTO> itemsNegocio = new ArrayList<>();
-        List<Negocio> negocios = negocioRepo.findByNombre(nombreNegocio);
-
-        if(negocios.isEmpty()){
-            throw new Exception("No se encontro nigun negocio con ese nombre");
+        List<Negocio> negocioOptional = negocioRepo.findBusiness(buscarNegocioDTO.nombre(), buscarNegocioDTO.tipoNegocio(), buscarNegocioDTO.popularidad());
+        if (negocioOptional.isEmpty()) {
+            throw new Exception("No se pudo encontrar ningun negocio con las caracteristiacas");
         }
-        negocios = ordenarNegociosPorDistancia(ubicacion, negocios);        
 
-        for (int i = 0; i < negocios.size(); i++) {
-            ItemNegocioDTO itemNegocioDTO = new ItemNegocioDTO(negocios.get(i).getCodigo(), negocios.get(i).getUbicacion(), negocios.get(i).getNombre(), negocios.get(i).getDescripcion(), negocios.get(i).getImagenes().get(0), negocios.get(i).getTipoNegocio());
+        negocioOptional = ordenarNegociosPorDistancia(buscarNegocioDTO.ubicacion(), negocioOptional);       
+
+        for (int i = 0; i < negocioOptional.size(); i++) {
+            ItemNegocioDTO itemNegocioDTO = new ItemNegocioDTO(negocioOptional.get(i).getCodigo(), negocioOptional.get(i).getUbicacion(), negocioOptional.get(i).getNombre(), negocioOptional.get(i).getDescripcion(), negocioOptional.get(i).getImagenes().get(0), negocioOptional.get(i).getTipoNegocio());
             itemsNegocio.add(itemNegocioDTO);
         }
-
+        // TODO Auto-generated method stub
         return itemsNegocio;
     }
 
@@ -140,78 +137,12 @@ public class NegocioServicioImpl implements NegocioServicio {
         return itemsNegocio;
     }
 
-    @Override
-    public void cambiarEstado(EstadoNegocio estadoNegocio, String codigoNegocio) throws Exception {
-        Optional<Negocio> negocioOptional = negocioRepo.findById(codigoNegocio);
-
-        if(negocioOptional.isEmpty()){
-            throw new Exception("El negocio no existe");
-        }
-
-        Negocio negocio = negocioOptional.get();
-        negocio.setEstadoNegocio(estadoNegocio);
-        negocioRepo.save(negocio);
-    }
+    
 
     @Override
     public List<ItemNegocioDTO> recomendarLugares(String codigoUsuario, Ubicacion ubicacion) throws Exception {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'recomendarLugares'");
-    }
-
-    @Override
-    public List<ItemNegocioDTO> filtrarNegociosCategoria(TipoNegocio tipoNegocio, Ubicacion ubicacion) throws Exception {
-        List<ItemNegocioDTO> itemsNegocio = new ArrayList<>();
-        List<Negocio> negocios = negocioRepo.findByTipoNegocio(tipoNegocio);
-
-        if(negocios.isEmpty()){
-            throw new Exception("No se encontro nigun negocio con ese tipo de negocio");
-        }
-        negocios = ordenarNegociosPorDistancia(ubicacion, negocios);
-
-        for (int i = 0; i < negocios.size(); i++) {
-            ItemNegocioDTO itemNegocioDTO = new ItemNegocioDTO(negocios.get(i).getCodigo(), negocios.get(i).getUbicacion(), negocios.get(i).getNombre(), negocios.get(i).getDescripcion(), negocios.get(i).getImagenes().get(0), negocios.get(i).getTipoNegocio());
-            itemsNegocio.add(itemNegocioDTO);
-        }
-
-        return itemsNegocio;
-    }
-
-    @Override
-    public List<ItemNegocioDTO> filtrarPopularidad(int popularidad,Ubicacion ubicacion) throws Exception {
-        List<ItemNegocioDTO> itemsNegocio = new ArrayList<>();
-        List<Negocio> negocios = negocioRepo.findByPopularidad(popularidad);
-
-        if(negocios.isEmpty()){
-            throw new Exception("No se encontro nigun negocio con ese tipo de popularidad");
-        }
-
-        negocios = ordenarNegociosPorDistancia(ubicacion, negocios);
-
-        for (int i = 0; i < negocios.size(); i++) {
-            ItemNegocioDTO itemNegocioDTO = new ItemNegocioDTO(negocios.get(i).getCodigo(), negocios.get(i).getUbicacion(), negocios.get(i).getNombre(), negocios.get(i).getDescripcion(), negocios.get(i).getImagenes().get(0), negocios.get(i).getTipoNegocio());
-            itemsNegocio.add(itemNegocioDTO);
-        }
-
-        return itemsNegocio;
-    }
-
-
-    @Override
-    public List<ItemNegocioDTO> listarNegocios() throws Exception {
-        List<ItemNegocioDTO> itemsNegocio = new ArrayList<>();
-        List<Negocio> negocios = negocioRepo.findAll();
-
-        if(negocios.isEmpty()){
-            throw new Exception("No se encontro nigun negocio");
-        }
-
-        for (int i = 0; i < negocios.size(); i++) {
-            ItemNegocioDTO itemNegocioDTO = new ItemNegocioDTO(negocios.get(i).getCodigo(), negocios.get(i).getUbicacion(), negocios.get(i).getNombre(), negocios.get(i).getDescripcion(), negocios.get(i).getImagenes().get(0), negocios.get(i).getTipoNegocio());
-            itemsNegocio.add(itemNegocioDTO);
-        }
-
-        return itemsNegocio;
     }
 
 
@@ -245,30 +176,12 @@ public class NegocioServicioImpl implements NegocioServicio {
             throw new Exception("El negocio no existe");
         }
 
-        Negocio negocio = negocioOptional.get();
+        //Negocio negocio = negocioOptional.get();
         
         return true;
     }
 
-    /**
-     * falta terminar
-     * @param horario
-     * @param diaActual
-     * @param horaActual
-     * @return
-     */
-    public static boolean negocioAbierto(Horario horario, String diaActual, LocalTime horaActual) {
-        // Convertir el día actual a mayúsculas
-        diaActual = diaActual.toUpperCase();
-        // Obtener el DayOfWeek correspondiente
-        DayOfWeek dia = DayOfWeek.valueOf(diaActual);
-
-        if (!horario.getDia().equalsIgnoreCase(dia.getDisplayName(TextStyle.FULL, new Locale("es", "ES")))) {
-            return false; // El negocio no está abierto hoy
-        }
-
-        return horaActual.isAfter(horario.getHoraInicio()) && horaActual.isBefore(horario.getHoraFin());
-    }
+    
 
     @Override
     public void finalizarTiempoEspera() throws Exception {
@@ -276,10 +189,16 @@ public class NegocioServicioImpl implements NegocioServicio {
         throw new UnsupportedOperationException("Unimplemented method 'finalizarTiempoEspera'");
     }
 
+
+    /**
+     * Falta
+     */
     @Override
-    public void generarHistorial(String codigoNegocio) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'generarHistorial'");
+    public List<ItemNegocioDTO> listarHistorial (String codigoCliente, Ubicacion ubicacion) throws Exception {
+        List<ItemNegocioDTO> itemsNegocio = new ArrayList<>();
+        
+
+        return itemsNegocio;
     }
 
     @Override
@@ -295,14 +214,28 @@ public class NegocioServicioImpl implements NegocioServicio {
      * @param listaNegocios
      * @return
      */
-    public static List<Negocio> ordenarNegociosPorDistancia(Ubicacion desdeUbicacion, List<Negocio> listaNegocios) {
+    public List<Negocio> ordenarNegociosPorDistancia(Ubicacion desdeUbicacion, List<Negocio> listaNegocios) {
         listaNegocios.sort(Comparator.comparingDouble(negocio -> distanciaEntrePuntos(desdeUbicacion, negocio.getUbicacion())));
         return listaNegocios;
     }
 
-    public static double distanciaEntrePuntos(Ubicacion ubicacion1, Ubicacion ubicacion2) {
+    public double distanciaEntrePuntos(Ubicacion ubicacion1, Ubicacion ubicacion2) {
         return Math.sqrt(Math.pow(ubicacion1.getLatitud() - ubicacion2.getLatitud(), 2) + Math.pow(ubicacion1.getLongitud() - ubicacion2.getLongitud(), 2));
     }
+
+    @Override
+    public void agregarPuntuacion(String codigoNegocio, int puntuacion) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'agregarPuntuacion'");
+    }
+
+    @Override
+    public DetalleNegocioDTO obtenerNegocioActivo(String codigoNegocio) throws Exception {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'obtenerNegocioActivo'");
+    }
+
+    
 
 
 }

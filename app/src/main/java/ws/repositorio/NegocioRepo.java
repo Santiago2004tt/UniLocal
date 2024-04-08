@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+
 import ws.model.documentos.Negocio;
 import ws.model.enums.EstadoNegocio;
 import ws.model.enums.TipoNegocio;
@@ -21,4 +23,7 @@ public interface NegocioRepo extends MongoRepository<Negocio, String> {
     List<Negocio> findByPopularidad(int popularidad);
 
     List<Negocio> findByEstadoNegocio(EstadoNegocio pendiente);
+
+    @Query("{$or:[{'nombre': ?0}, {'tipoNegocio':?1}, {'popularidad': ?2}], $and:[{'estadoNegocio':'APROBADO'}]}")
+    List<Negocio> findBusiness(String nombre, TipoNegocio tipoNegocio, int popularidad);
 }

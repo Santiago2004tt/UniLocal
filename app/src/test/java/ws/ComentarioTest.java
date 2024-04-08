@@ -24,14 +24,14 @@ public class ComentarioTest {
     @Test
     public void listarComentarios() throws Exception{
         
-        List<ItemComentarioDTO> lista= comentarioServicioImpl.listarComentarios("6612191a5f70451d310f368d");
+        List<ItemComentarioDTO> lista= comentarioServicioImpl.listarComentarios("Cliente1");
         
         assertEquals(lista.size(), 1);
     }
     
     @Test
     public void agregarComentario(){
-        RegistrarComentarioDTO registrarComentarioDTO= new RegistrarComentarioDTO(4, "Hola", "Cliente1", "6612191a5f70451d310f368d");
+        RegistrarComentarioDTO registrarComentarioDTO= new RegistrarComentarioDTO(4, "Hola", "Cliente1", "Negocio2");
         try{
             comentarioServicioImpl.crearComentario(registrarComentarioDTO);
         }catch(Exception e){

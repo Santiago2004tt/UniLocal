@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import ws.dto.BuscarNegocioDTO;
 import ws.dto.DetalleNegocioDTO;
 import ws.dto.ItemNegocioDTO;
 import ws.dto.RegistrarNegocioDTO;
@@ -31,7 +32,7 @@ public class NegocioTest {
 
 
     @Test
-    public void crearNegocio(){
+    public void crearNegocioFallo(){
         Ubicacion ubicacion = new Ubicacion(56, 31);
         Horario horario = new Horario(LocalTime.now(), LocalTime.now(), "Lunes");
         ArrayList<Horario> arrayList = new ArrayList<>();
@@ -40,12 +41,12 @@ public class NegocioTest {
         fotos.add("Foto");
         ArrayList<String> telefonos = new ArrayList<>();
         telefonos.add("313141254");
-        RegistrarNegocioDTO registrarNegocioDTO = new RegistrarNegocioDTO(ubicacion, "Cliente2", "Paramericana", "Vengan", arrayList, fotos, TipoNegocio.SUPERMERCADO, telefonos);
+        RegistrarNegocioDTO registrarNegocioDTO = new RegistrarNegocioDTO(ubicacion, "Cliente4", "Paramericana", "Vengan", arrayList, fotos, TipoNegocio.SUPERMERCADO, telefonos);
 
         try{
             negocioServicio.crearNegocio(registrarNegocioDTO);
         }catch(Exception e){
-            assertEquals(e.getMessage(), "hola");
+            assertEquals(e.getMessage(),"El codigo no se encuentra registrado" );
         }
     }
 
@@ -53,20 +54,24 @@ public class NegocioTest {
     @Test
     public void buscarNegocio(){
         try{
-            DetalleNegocioDTO detalleNegocioDTO = negocioServicio.obtenerNegocio("6612191a5f70451d310f368d");
+            DetalleNegocioDTO detalleNegocioDTO = negocioServicio.obtenerNegocio("Negocio1");
             assertEquals(detalleNegocioDTO.nombre(), "Las salchipapas");
         }catch(Exception e){
             fail();
         }
     }
 
+
     @Test
-    public void listarNegociosNombre(){
+    public void buscarNegocioNew(){
+        Ubicacion ubicacion = new Ubicacion(32.3,54.2);
+        BuscarNegocioDTO buscarNegocioDTO = new BuscarNegocioDTO(null, TipoNegocio.CAFETERIA, 3, ubicacion);
+
         try{
-            List<ItemNegocioDTO> lista = negocioServicio.buscarNegocioNombre("Paramericana");
-            assertEquals(lista.get(0).codigo(), "6612e9096923bd62d2d50936");
+            List<ItemNegocioDTO> lista = negocioServicio.buscarNegocio(buscarNegocioDTO);
+            assertEquals(lista.get(0).codigo(), "Negocio2");
         }catch(Exception e){
-            fail();
+            fail(e);
         }
     }
 

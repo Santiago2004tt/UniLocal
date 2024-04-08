@@ -17,4 +17,6 @@ public interface ComentarioServicio {
     List<ItemComentarioDTO> listarComentarios(String codigoNegocio)throws Exception;
 
     DetalleComentarioDTO obtenerComentario(String codigoComentario)throws Exception;
+
+    int calcularPuntuacion(String codigoNegocio)throws Exception;
 }

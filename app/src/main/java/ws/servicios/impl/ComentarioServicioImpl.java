@@ -45,6 +45,10 @@ public class ComentarioServicioImpl implements ComentarioServicio{
         
         negocioServicio.obtenerNegocio(registrarComentarioDTO.codigoNegocio());
 
+        if(registrarComentarioDTO.calificacion()>5 || registrarComentarioDTO.calificacion()<0){
+            throw new Exception("La calificacion debe ser entre 0 a 5");
+        }
+        
         comentario.setCalificacion(registrarComentarioDTO.calificacion());
         comentario.setCodigoCliente(registrarComentarioDTO.codigoCliente());
         comentario.setMensaje(registrarComentarioDTO.mensaje());
@@ -132,5 +136,25 @@ public class ComentarioServicioImpl implements ComentarioServicio{
         Comentario comentario = comentarioOptional.get();
 
         return new DetalleComentarioDTO(comentario.getCodigo(), comentario.getCalificacion(), comentario.getCodigoCliente(), comentario.getCodigoNegocio(), comentario.getMensaje(), comentario.getRespuesta());
+    }
+
+
+    @Override
+    public int calcularPuntuacion(String codigoNegocio) throws Exception {
+        List<Comentario> comentarios = comentarioRepo.findByCodigoNegocio(codigoNegocio);
+        
+        int valor = calcularPromedio(comentarios);
+        negocioServicio.agregarPuntuacion(codigoNegocio, valor);
+        return valor;
+    }
+
+
+    private int calcularPromedio(List<Comentario> comentarios) {
+        int suma = 0;
+        for (int i = 0; i < comentarios.size(); i++) {
+            suma += comentarios.get(i).getCalificacion();
+        }
+        suma = suma/comentarios.size();
+        return suma;
     }
 }

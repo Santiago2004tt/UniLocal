@@ -18,6 +18,7 @@ public interface ClienteServicio extends CuentaServicio{
     
     void eliminarCliente(String codigoCliente) throws Exception;
     
+    //borrar
     List<ItemClienteDTO> listarClientes()throws Exception;
     
     void guardarFavorito(String codigoCliente, String codigoNegocio)throws Exception;

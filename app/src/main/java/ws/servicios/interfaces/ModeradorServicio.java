@@ -11,7 +11,5 @@ public interface ModeradorServicio extends CuentaServicio {
     void rechazarPeticion(String codigoNegocio, String codigo);
 
     DetalleModerador obtenerModerador(String codigoModerador);
-
-    List<ItemModeradorDTO> listarModeradores();
     
 }
