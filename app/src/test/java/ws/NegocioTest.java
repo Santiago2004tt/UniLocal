@@ -65,7 +65,7 @@ public class NegocioTest {
     @Test
     public void buscarNegocioNew(){
         Ubicacion ubicacion = new Ubicacion(32.3,54.2);
-        BuscarNegocioDTO buscarNegocioDTO = new BuscarNegocioDTO(null, TipoNegocio.CAFETERIA, 3, ubicacion);
+        BuscarNegocioDTO buscarNegocioDTO = new BuscarNegocioDTO(null, TipoNegocio.CAFETERIA);
 
         try{
             List<ItemNegocioDTO> lista = negocioServicio.buscarNegocio(buscarNegocioDTO);
