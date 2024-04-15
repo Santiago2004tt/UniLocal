@@ -27,7 +27,6 @@ db.Clientes.insertMany([
         estado: 'ACTIVO',
         telefonos: ['3141231234'],
         bloqueos: [{
-                    _id:'bloqueo1', 
                     fechaInicio: new Date(), 
                     fechaFinal: new Date(), 
                     codigoModerador: 'moderador1',
@@ -74,7 +73,7 @@ db.Negocios.insertMany([
             {
                 horaInicio: ISODate('2024-04-07T03:55:06.484Z'),
                 horaFin: ISODate('2024-04-07T03:55:06.484Z'),
-                dia: 'Lunes'
+                dia: 'SUNDAY'
             }
         ],
         imagenes: [
@@ -104,7 +103,7 @@ db.Negocios.insertMany([
             {
                 horaInicio: ISODate('2024-04-07T03:55:06.484Z'),
                 horaFin: ISODate('2024-04-07T03:55:06.484Z'),
-                dia: 'Lunes'
+                dia: 'MONDAY'
             }
         ],
         imagenes: [

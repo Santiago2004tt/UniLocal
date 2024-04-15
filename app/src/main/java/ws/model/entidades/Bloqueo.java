@@ -10,7 +10,6 @@ import lombok.*;
 @ToString
 public class Bloqueo {
 
-    private String codigo;
     private LocalDateTime fechaInicio;
     private LocalDateTime fechaFinal;
     private String codigoModerador;

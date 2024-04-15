@@ -3,9 +3,9 @@ package ws.repositorio;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import ws.model.documentos.Cliente;
+import ws.model.documentos.Moderador;
 
 @Repository
-public interface ModeradorRepo extends MongoRepository<Cliente, String> {
+public interface ModeradorRepo extends MongoRepository<Moderador, String> {
 
 }

@@ -3,6 +3,8 @@ package ws;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class NegocioTest {
     @Autowired
     NegocioRepo negocioRepo;
 
+
     @Autowired
     NegocioServicio negocioServicio;
 
@@ -34,18 +37,20 @@ public class NegocioTest {
     @Test
     public void crearNegocioFallo(){
         Ubicacion ubicacion = new Ubicacion(56, 31);
-        Horario horario = new Horario(LocalTime.now(), LocalTime.now(), "Lunes");
+        DayOfWeek day = LocalDate.now().getDayOfWeek();
+        Horario horario = new Horario(LocalTime.now().getHour(), 7,  day);
         ArrayList<Horario> arrayList = new ArrayList<>();
         arrayList.add(horario);
         ArrayList<String> fotos = new ArrayList<>();
         fotos.add("Foto");
         ArrayList<String> telefonos = new ArrayList<>();
         telefonos.add("313141254");
-        RegistrarNegocioDTO registrarNegocioDTO = new RegistrarNegocioDTO(ubicacion, "Cliente4", "Paramericana", "Vengan", arrayList, fotos, TipoNegocio.SUPERMERCADO, telefonos);
+        RegistrarNegocioDTO registrarNegocioDTO = new RegistrarNegocioDTO(ubicacion, "Cliente1", "Almuadas", "Vengan", arrayList, fotos, TipoNegocio.SUPERMERCADO, telefonos);
 
         try{
             negocioServicio.crearNegocio(registrarNegocioDTO);
         }catch(Exception e){
+
             assertEquals(e.getMessage(),"El codigo no se encuentra registrado" );
         }
     }
@@ -64,7 +69,6 @@ public class NegocioTest {
 
     @Test
     public void buscarNegocioNew(){
-        Ubicacion ubicacion = new Ubicacion(32.3,54.2);
         BuscarNegocioDTO buscarNegocioDTO = new BuscarNegocioDTO(null, TipoNegocio.CAFETERIA);
 
         try{

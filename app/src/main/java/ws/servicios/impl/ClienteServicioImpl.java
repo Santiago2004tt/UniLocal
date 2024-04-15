@@ -1,6 +1,5 @@
 package ws.servicios.impl;
 
-import java.util.List;
 import java.util.Optional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import ws.dto.ActualizarClienteDTO;
 import ws.dto.CambioPasswordDTO;
 import ws.dto.DetalleClienteDTO;
-import ws.dto.ItemClienteDTO;
 import ws.dto.RegistrarClienteDTO;
 import ws.dto.SessionDTO;
 import ws.model.documentos.Cliente;
@@ -106,7 +104,7 @@ public class ClienteServicioImpl implements ClienteServicio{
 
         Cliente cliente = optionalCLiente.get();
 
-        return new DetalleClienteDTO(cliente.getNombre(), cliente.getPassword(), cliente.getEmail(), cliente.getFotoPerfil(),cliente.getNickname() , cliente.getCiudad(), cliente.getTelefonos(), cliente.getHistorial(), cliente.getFavortios());
+        return new DetalleClienteDTO(cliente.getNombre(), cliente.getPassword(), cliente.getEmail(), cliente.getFotoPerfil(),cliente.getNickname() , cliente.getCiudad(), cliente.getTelefonos(), cliente.getHistorial(), cliente.getFavortios(), cliente.getBloqueos());
     }
 
     /**
@@ -129,16 +127,16 @@ public class ClienteServicioImpl implements ClienteServicio{
      * metodo para listar a todos los clientes
      */
     @Override
-    public List<ItemClienteDTO> listarClientes() {
-        List<Cliente> clientes = clienteRepo.findAll();
-
-        List<ItemClienteDTO> items = new ArrayList<>();
-
-        for (Cliente cliente: clientes){
-            items.add(new ItemClienteDTO(cliente.getCodigo(), cliente.getNombre(), cliente.getFotoPerfil(), cliente.getNickname(), cliente.getCiudad()));
-
+    public void agregarBloqueo(String codigoCliente, Bloqueo bloqueo) throws Exception{
+        Optional<Cliente> clienteOptional = clienteRepo.findById(codigoCliente);
+        
+        if(clienteOptional.isEmpty()){
+            throw new Exception("El cliente no se a encontrado");
         }
-        return items;    
+        
+        Cliente cliente = clienteOptional.get();
+        cliente.getBloqueos().add(bloqueo);
+        clienteRepo.save(cliente);
     }
 
     /**

@@ -7,6 +7,7 @@ import java.util.List;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import ws.model.entidades.Bloqueo;
 
 public record DetalleClienteDTO(
 
@@ -18,6 +19,7 @@ public record DetalleClienteDTO(
         @NotBlank String ciudad,
         @NotEmpty ArrayList<String> telefonos,
         List<String> historial,
-        List<String> favoritos
+        List<String> favoritos,
+        List<Bloqueo> bloqueos
         ) {
 } 

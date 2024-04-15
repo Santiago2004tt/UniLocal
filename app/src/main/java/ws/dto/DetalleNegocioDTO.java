@@ -1,6 +1,8 @@
 package ws.dto;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.validator.constraints.Length;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -20,8 +22,9 @@ public record DetalleNegocioDTO(
         @NotEmpty ArrayList<Horario> horarios,
         @NotEmpty ArrayList<String> imagenes,
         @NotNull TipoNegocio tipoNegocio,
-        ArrayList<HistorialRevision> historialRevisiones,
-        @NotEmpty ArrayList<String> telefonos
+        List<HistorialRevision> historialRevisiones,
+        @NotEmpty ArrayList<String> telefonos,
+        @NotEmpty int puntuacion
 
 ) {
 

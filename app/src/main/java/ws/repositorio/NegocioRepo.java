@@ -34,4 +34,12 @@ public interface NegocioRepo extends MongoRepository<Negocio, String> {
     @Query("{or:[{'nombre':?0}, {'tipoNegocio': ?1},{'nombre':?2}, {'tipoNegocio':?3} ,{'nombre':?4} ]}")
     List<Negocio> findByRecomendar(String nombre, TipoNegocio tipoNegocio, String nombre1, TipoNegocio tipoNegocio1,
             String nombre2);
+
+    List<Negocio> findByNombreContainingIgnoreCaseAndTipoNegocioAndEstadoNegocio(String nombre, TipoNegocio tipoNegocio, EstadoNegocio estadoNegocio);
+
+    List<Negocio> findByNombreContainingIgnoreCaseAndEstadoNegocio(String nombre, EstadoNegocio aprobado);
+
+    List<Negocio> findByTipoNegocioAndEstadoNegocio(TipoNegocio tipoNegocio, EstadoNegocio aprobado);
+
+    Optional<Negocio> findByCodigoAndEstadoNegocio(String codigoNegocio, EstadoNegocio aprobado);
 }

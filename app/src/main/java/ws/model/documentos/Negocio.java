@@ -1,6 +1,7 @@
 package ws.model.documentos;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -37,7 +38,7 @@ public class Negocio {
     private TipoNegocio tipoNegocio;
     private EstadoNegocio estadoNegocio;
     private ArrayList<String> telefonos;
-    private ArrayList <HistorialRevision> historialRevisiones = new ArrayList<>();
+    private List <HistorialRevision> historialRevisiones = new ArrayList<>();
     private ArrayList<Horario> horarios = new ArrayList<>();
     private ArrayList<String> imagenes = new ArrayList<>();
     private int popularidad;

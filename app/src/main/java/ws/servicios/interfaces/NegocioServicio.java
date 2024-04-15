@@ -33,13 +33,13 @@ public interface NegocioServicio {
 
     void finalizarTiempoEspera()throws Exception;
 
-    List<ItemNegocioDTO> listarHistorial(String codigoCliente, Ubicacion ubicacion) throws Exception;
+    
 
     List<ItemNegocioDTO> listarNegociosFavoritos(String codigoCliente, Ubicacion ubicacion)throws Exception;
 
-    void agregarPuntuacion(String codigoNegocio, int puntuacion);
+    void agregarPuntuacion(String codigoNegocio, int puntuacion)throws Exception;
 
-    List<ItemNegocioDTO> ordenarUbicacion(List<ItemNegocioDTO> listaNegocios);
+    List<ItemNegocioDTO> ordenarUbicacion(Ubicacion ubicacion, List<ItemNegocioDTO> listaNegocios)throws Exception;
 
-    List<ItemNegocioDTO> ordenarPuntuacion(List<ItemNegocioDTO> listaNegocios);
+    List<ItemNegocioDTO> ordenarPuntuacion(List<ItemNegocioDTO> listaNegocios)throws Exception;
 }

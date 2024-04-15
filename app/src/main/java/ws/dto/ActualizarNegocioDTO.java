@@ -1,12 +1,15 @@
 package ws.dto;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import ws.model.entidades.Bloqueo;
+import ws.model.entidades.HistorialRevision;
 import ws.model.entidades.Horario;
 import ws.model.entidades.Ubicacion;
 import ws.model.enums.EstadoNegocio;
@@ -22,6 +25,7 @@ public record ActualizarNegocioDTO(
         @NotEmpty ArrayList<String> imagenes,
         @NotNull TipoNegocio tipoNegocio,
         @NotEmpty ArrayList<String> telefonos, 
-        @NotEmpty EstadoNegocio estadoNegocio) {
+        @NotEmpty EstadoNegocio estadoNegocio,
+        List<HistorialRevision> historialRevision){
 
 }

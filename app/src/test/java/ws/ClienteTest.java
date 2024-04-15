@@ -70,13 +70,6 @@ public class ClienteTest {
         assertEquals(cliente.getEstadoRegistro(), EstadoRegistro.INACTIVO);
     }
 
-    @Test
-    public void listarClientes() throws Exception{
-
-        List<ItemClienteDTO> lista = clienteServicioImpl.listarClientes();
-
-        assertEquals(lista.size(), 3);
-    }
 
     @Test
     public void guardarHistorial() throws Exception{
@@ -95,7 +88,6 @@ public class ClienteTest {
     public void verificarBloqueoActual() throws Exception{
 
         Bloqueo bloqueo = new Bloqueo();
-        bloqueo.setCodigo("Bloque2");
         LocalDateTime fechaInicio =  LocalDateTime.of(2024, 4, 2, 15, 30, 0);
         LocalDateTime fechaFinal =  LocalDateTime.of(2024, 4, 7, 15, 30, 0);
         bloqueo.setFechaInicio(fechaInicio);

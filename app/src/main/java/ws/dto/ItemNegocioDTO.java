@@ -12,6 +12,7 @@ public record ItemNegocioDTO(
     @NotBlank @Length(max = 50) String nombre,
     @NotBlank String descripcion,
     @NotBlank String fotoPrimera,
-    @NotBlank TipoNegocio tipoNegocio
+    @NotBlank TipoNegocio tipoNegocio,
+    @NotBlank int puntuacion
 ) {
 } 
