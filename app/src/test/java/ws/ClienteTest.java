@@ -5,13 +5,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.Test;
 import ws.dto.ActualizarClienteDTO;
-import ws.dto.ItemClienteDTO;
 import ws.dto.RegistrarClienteDTO;
 import ws.model.documentos.Cliente;
 import ws.model.entidades.Bloqueo;
