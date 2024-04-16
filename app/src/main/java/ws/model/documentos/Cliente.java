@@ -34,6 +34,7 @@ public class Cliente {
     private String nickname;
     private String ciudad;
     private EstadoRegistro estadoRegistro;
+    private String codigoRecuperacion;
     private ArrayList<String> telefonos = new ArrayList<>();
     private ArrayList<Bloqueo> bloqueos = new ArrayList<>();
     private ArrayList<String> favortios = new ArrayList<>();

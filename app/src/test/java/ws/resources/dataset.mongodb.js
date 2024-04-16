@@ -10,6 +10,7 @@ db.Clientes.insertMany([
         nickname: 'juanito',
         ciudad: 'Armenia',
         estado: 'ACTIVO',
+        codigoRecuperacion: '0000',
         telefonos: ['3141231234', '3151231234'],
         bloqueos: [],
         favoritos: [],
@@ -25,6 +26,7 @@ db.Clientes.insertMany([
         nickname: 'maria',
         ciudad: 'Armenia',
         estado: 'ACTIVO',
+        codigoRecuperacion: '0000',
         telefonos: ['3141231234'],
         bloqueos: [{
                     fechaInicio: new Date(), 
@@ -45,6 +47,7 @@ db.Clientes.insertMany([
         nickname: 'pedrito',
         ciudad: 'Armenia',
         estado: 'ACTIVO',
+        codigoRecuperacion: '0000',
         telefonos: ['3141231234'],
         bloqueos: [],
         favoritos: [],

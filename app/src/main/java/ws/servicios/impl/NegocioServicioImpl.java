@@ -1,7 +1,9 @@
 package ws.servicios.impl;
 
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -20,6 +22,7 @@ import ws.dto.DetalleNegocioDTO;
 import ws.dto.ItemNegocioDTO;
 import ws.dto.RegistrarNegocioDTO;
 import ws.model.documentos.Negocio;
+import ws.model.entidades.HistorialRevision;
 import ws.model.entidades.Horario;
 import ws.model.entidades.Ubicacion;
 import ws.model.enums.EstadoNegocio;
@@ -273,10 +276,30 @@ public class NegocioServicioImpl implements NegocioServicio {
 
     @Override
     public void finalizarTiempoEspera() throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'finalizarTiempoEspera'");
+        List<Negocio> listaNegocios = negocioRepo.findByEstadoNegocio(EstadoNegocio.RECHAZADO);
+
+        for (int i = 0; i < listaNegocios.size(); i++) {
+            if(verificarHistorialDias(listaNegocios.get(i).getHistorialRevisiones())){
+                Negocio negocio = listaNegocios.get(i);
+                negocio.setEstadoNegocio(EstadoNegocio.INACTIVO);
+                negocioRepo.save(negocio);
+            }
+        }
     }
 
+
+    private boolean verificarHistorialDias(List<HistorialRevision> historialRevisiones) {
+        if(historialRevisiones.size()>0){
+            HistorialRevision historialRevision = historialRevisiones.get(historialRevisiones.size()-1);
+            Duration diferencia = Duration.between(historialRevision.getFecha(), LocalDateTime.now());
+
+            // Verificar si la diferencia es 5 veces mayor
+            if (diferencia.equals(diferencia.multipliedBy(5))) {
+                return true;
+            } 
+        }
+        return false;
+    }
 
     @Override
     public List<ItemNegocioDTO> listarNegociosFavoritos(String codigoCliente, Ubicacion ubicacion) throws Exception {
