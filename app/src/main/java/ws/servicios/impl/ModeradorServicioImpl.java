@@ -3,8 +3,10 @@ package ws.servicios.impl;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +17,7 @@ import ws.dto.DetalleClienteDTO;
 import ws.dto.DetalleComentarioDTO;
 import ws.dto.DetalleModerador;
 import ws.dto.DetalleNegocioDTO;
+import ws.dto.EmailDTO;
 import ws.dto.RegistrarBloqueoDTO;
 import ws.dto.SessionDTO;
 import ws.model.entidades.Bloqueo;
@@ -24,9 +27,11 @@ import ws.model.enums.EstadoReporte;
 import ws.repositorio.ModeradorRepo;
 import ws.servicios.interfaces.ClienteServicio;
 import ws.servicios.interfaces.ComentarioServicio;
+import ws.servicios.interfaces.EmailServicio;
 import ws.servicios.interfaces.ModeradorServicio;
 import ws.servicios.interfaces.NegocioServicio;
 import ws.servicios.interfaces.ReporteServicio;
+import ws.utils.BodyEmailUtil;
 import ws.model.documentos.Moderador;
 
 @Service
@@ -47,6 +52,9 @@ public class ModeradorServicioImpl implements ModeradorServicio {
 
     @Autowired
     private final ReporteServicio reporteServicio;
+
+    @Autowired
+    private final EmailServicio emailServicio;
     
     @Override
     public void iniciarSesion(SessionDTO SessionDTO) throws Exception {
@@ -56,14 +64,51 @@ public class ModeradorServicioImpl implements ModeradorServicio {
 
     @Override
     public String enviarCodigoRecuperacion(String email) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'enviarCodigoRecuperacion'");
+        Optional <Moderador> moderadorOptional = moderadorRepo.findByEmail(email);
+
+        if(moderadorOptional.isEmpty()){
+            throw new Exception("El email no se a encontrado");
+        }
+
+        Moderador moderador = moderadorOptional.get();
+        String codigoRecuperacion = generarCodigo();
+        moderador.setCodigoRecuperacion(codigoRecuperacion);
+        
+        String cuerpo = BodyEmailUtil.emailRecuperarContrasenia(moderador.getNombre(), codigoRecuperacion);
+        String asunto = "Recuperacion de cuenta";
+        EmailDTO emailDTO = new EmailDTO(asunto, cuerpo, email);
+        emailServicio.enviarCorreo(emailDTO);
+        return codigoRecuperacion;
+    }
+
+    private String generarCodigo() {
+        // Creamos un objeto de la clase Random para generar números aleatorios
+        Random random = new Random();
+
+        // Generamos un número aleatorio entre 1000 y 9999 (ambos inclusive)
+        int numero = random.nextInt(9000) + 1000;
+
+        // Convertimos el número entero en una cadena de texto y lo retornamos
+        return String.valueOf(numero);
     }
 
     @Override
     public void cambiarPassword(CambioPasswordDTO cambioPassword) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'cambiarPassword'");
+        Optional <Moderador> moderadorOptional = moderadorRepo.findById(cambioPassword.codigoCuenta());
+
+        if(moderadorOptional.isEmpty()){
+            throw new Exception("El email no se a encontrado");
+        }
+
+        Moderador moderador = moderadorOptional.get();
+
+        if(moderador.getCodigoRecuperacion() == cambioPassword.codigoRecuperacion()){
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String passwordEncriptada = passwordEncoder.encode( cambioPassword.passwordNueva() );
+            moderador.setPassword(passwordEncriptada);
+        }else{
+            throw new Exception("El codigo es incorrecto");
+        }
     }
 
     @Override

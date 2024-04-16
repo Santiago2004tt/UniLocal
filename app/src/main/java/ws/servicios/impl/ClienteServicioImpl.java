@@ -1,8 +1,12 @@
 package ws.servicios.impl;
 
 import java.util.Optional;
+import java.util.Random;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import ws.dto.ActualizarClienteDTO;
 import ws.dto.CambioPasswordDTO;
 import ws.dto.DetalleClienteDTO;
+import ws.dto.EmailDTO;
 import ws.dto.RegistrarClienteDTO;
 import ws.dto.SessionDTO;
 import ws.model.documentos.Cliente;
@@ -19,6 +24,8 @@ import ws.model.entidades.Bloqueo;
 import ws.model.enums.EstadoRegistro;
 import ws.repositorio.ClienteRepo;
 import ws.servicios.interfaces.ClienteServicio;
+import ws.servicios.interfaces.EmailServicio;
+import ws.utils.BodyEmailUtil;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +34,8 @@ public class ClienteServicioImpl implements ClienteServicio{
 
     private final ClienteRepo clienteRepo; //El repositorio
     
+    @Autowired
+    private final EmailServicio emailServicio;
     
     @Override
     public void iniciarSesion(SessionDTO sessionDTO) throws Exception {
@@ -35,14 +44,51 @@ public class ClienteServicioImpl implements ClienteServicio{
 
     @Override
     public String enviarCodigoRecuperacion(String email) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'enviarLinkRecuperacion'");
+        Optional <Cliente> clienteOptional = clienteRepo.findByEmail(email);
+
+        if(clienteOptional.isEmpty()){
+            throw new Exception("El email no se a encontrado");
+        }
+
+        Cliente cliente = clienteOptional.get();
+        String codigoRecuperacion = generarCodigo();
+        cliente.setCodigoRecuperacion(codigoRecuperacion);
+        
+        String cuerpo = BodyEmailUtil.emailRecuperarContrasenia(cliente.getNombre(), codigoRecuperacion);
+        String asunto = "Recuperacion de cuenta";
+        EmailDTO emailDTO = new EmailDTO(asunto, cuerpo, email);
+        emailServicio.enviarCorreo(emailDTO);
+        return codigoRecuperacion;
+    }
+
+    private String generarCodigo() {
+          // Creamos un objeto de la clase Random para generar números aleatorios
+          Random random = new Random();
+
+          // Generamos un número aleatorio entre 1000 y 9999 (ambos inclusive)
+          int numero = random.nextInt(9000) + 1000;
+  
+          // Convertimos el número entero en una cadena de texto y lo retornamos
+          return String.valueOf(numero);
     }
 
     @Override
     public void cambiarPassword(CambioPasswordDTO cambioPassword) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'cambiarPassword'");
+        Optional <Cliente> clienteOptional = clienteRepo.findById(cambioPassword.codigoCuenta());
+
+        if(clienteOptional.isEmpty()){
+            throw new Exception("El email no se a encontrado");
+        }
+
+        Cliente cliente = clienteOptional.get();
+
+        if(cliente.getCodigoRecuperacion() == cambioPassword.codigoRecuperacion()){
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String passwordEncriptada = passwordEncoder.encode( cambioPassword.passwordNueva() );
+            cliente.setPassword( passwordEncriptada );
+        }else{
+            throw new Exception("El codigo es incorrecto");
+        }
     }
 
     /**
@@ -64,10 +110,13 @@ public class ClienteServicioImpl implements ClienteServicio{
         cliente.setNickname(registroClienteDTO.nickname());
         cliente.setCiudad(registroClienteDTO.ciudad());
         cliente.setFotoPerfil(registroClienteDTO.fotoPerfil());
-
         cliente.setEmail(registroClienteDTO.email());
-        cliente.setPassword(registroClienteDTO.password());
         cliente.setEstadoRegistro(EstadoRegistro.ACTIVO);
+        
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String passwordEncriptada = passwordEncoder.encode( registroClienteDTO.password() );
+        cliente.setPassword( passwordEncriptada );
         
         clienteRepo.save(cliente);
     }

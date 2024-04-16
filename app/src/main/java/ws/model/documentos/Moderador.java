@@ -27,5 +27,6 @@ public class Moderador {
     private String nombre;
     private String password;
     private String email;
+    private String codigoRecuperacion;
     private EstadoRegistro estadoRegistro;
 }
