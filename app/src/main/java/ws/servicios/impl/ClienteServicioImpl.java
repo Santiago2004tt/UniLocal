@@ -23,6 +23,7 @@ import ws.model.documentos.Cliente;
 import ws.model.entidades.Bloqueo;
 import ws.model.enums.EstadoRegistro;
 import ws.repositorio.ClienteRepo;
+import ws.servicios.interfaces.AutenticacionServicio;
 import ws.servicios.interfaces.ClienteServicio;
 import ws.servicios.interfaces.EmailServicio;
 import ws.utils.BodyEmailUtil;
@@ -36,10 +37,13 @@ public class ClienteServicioImpl implements ClienteServicio{
     
     @Autowired
     private final EmailServicio emailServicio;
+
+    @Autowired
+    private final AutenticacionServicio autenticacionServicio;
     
     @Override
     public void iniciarSesion(SessionDTO sessionDTO) throws Exception {
-        
+        autenticacionServicio.iniciarSesionCliente(sessionDTO);
     }
 
     @Override
@@ -53,7 +57,7 @@ public class ClienteServicioImpl implements ClienteServicio{
         Cliente cliente = clienteOptional.get();
         String codigoRecuperacion = generarCodigo();
         cliente.setCodigoRecuperacion(codigoRecuperacion);
-        
+        clienteRepo.save(cliente);
         String cuerpo = BodyEmailUtil.emailRecuperarContrasenia(cliente.getNombre(), codigoRecuperacion);
         String asunto = "Recuperacion de cuenta";
         EmailDTO emailDTO = new EmailDTO(asunto, cuerpo, email);
@@ -112,7 +116,8 @@ public class ClienteServicioImpl implements ClienteServicio{
         cliente.setFotoPerfil(registroClienteDTO.fotoPerfil());
         cliente.setEmail(registroClienteDTO.email());
         cliente.setEstadoRegistro(EstadoRegistro.ACTIVO);
-        
+        cliente.setCodigoRecuperacion("0000");
+        cliente.setTelefonos(registroClienteDTO.telefonos());        
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String passwordEncriptada = passwordEncoder.encode( registroClienteDTO.password() );

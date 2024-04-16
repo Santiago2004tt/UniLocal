@@ -25,6 +25,7 @@ import ws.model.entidades.HistorialRevision;
 import ws.model.enums.EstadoNegocio;
 import ws.model.enums.EstadoReporte;
 import ws.repositorio.ModeradorRepo;
+import ws.servicios.interfaces.AutenticacionServicio;
 import ws.servicios.interfaces.ClienteServicio;
 import ws.servicios.interfaces.ComentarioServicio;
 import ws.servicios.interfaces.EmailServicio;
@@ -55,11 +56,13 @@ public class ModeradorServicioImpl implements ModeradorServicio {
 
     @Autowired
     private final EmailServicio emailServicio;
+
+    @Autowired
+    private final AutenticacionServicio autenticacionServicio;
     
     @Override
     public void iniciarSesion(SessionDTO SessionDTO) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'iniciarSesion'");
+        autenticacionServicio.iniciarSesionCliente(SessionDTO);
     }
 
     @Override
