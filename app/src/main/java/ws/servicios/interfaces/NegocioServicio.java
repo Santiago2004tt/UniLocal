@@ -33,8 +33,6 @@ public interface NegocioServicio {
 
     void finalizarTiempoEspera()throws Exception;
 
-    
-
     List<ItemNegocioDTO> listarNegociosFavoritos(String codigoCliente, Ubicacion ubicacion)throws Exception;
 
     void agregarPuntuacion(String codigoNegocio, int puntuacion)throws Exception;

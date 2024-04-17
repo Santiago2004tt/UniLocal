@@ -35,7 +35,7 @@ public class ClienteTest {
         ArrayList<String> telefonos = new ArrayList<>();
         telefonos.add("3134125124");
         telefonos.add("3154115134");
-        RegistrarClienteDTO registrarClienteDTO = new RegistrarClienteDTO("Pepe", "pepito", "santisbb2004@gmail.com", "mi foto", "pepito", "armenia", telefonos);
+        RegistrarClienteDTO registrarClienteDTO = new RegistrarClienteDTO("Pepe", "pepito", "hola@gmail.com", "mi foto", "pepito123", "armenia", telefonos);
         try{
             clienteServicioImpl.registrarse(registrarClienteDTO);
             
