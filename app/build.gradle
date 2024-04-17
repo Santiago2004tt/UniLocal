@@ -31,6 +31,7 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.google.guava:guava:31.1-jre'
     implementation 'com.cloudinary:cloudinary-http45:1.38.0'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
