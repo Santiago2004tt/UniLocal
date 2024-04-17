@@ -14,7 +14,7 @@ import ws.dto.RegistrarBloqueoDTO;
 import ws.servicios.interfaces.ModeradorServicio;
 
 @RestController
-@RequestMapping("/api/clientes")
+@RequestMapping("/api/moderadores")
 @RequiredArgsConstructor
 public class ModeradorControlador {
 
@@ -44,7 +44,7 @@ public class ModeradorControlador {
         return ResponseEntity.ok().body( new MensajeDTO<>(false, "Comentario rechazado"));
     }
 
-    @GetMapping("/obtener-moderador")
+    @GetMapping("/obtener-moderador/{codigo}")
     public ResponseEntity<MensajeDTO<DetalleModerador>> obtenerModerador(@Valid @RequestBody String codigoModerador)throws Exception{
         return ResponseEntity.ok().body( new MensajeDTO<>(false, moderadorServicio.obtenerModerador(codigoModerador) ));
     }
