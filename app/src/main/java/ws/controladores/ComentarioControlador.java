@@ -54,7 +54,7 @@ public class ComentarioControlador {
 
     }
 
-    @GetMapping("/obtener-cliente/{codigo}")
+    @GetMapping("/calcular-puntuacion")
     public ResponseEntity<MensajeDTO<Integer>> calcularPuntuacion(@Valid @RequestBody String codigoNegocio)throws Exception{
         return ResponseEntity.ok().body( new MensajeDTO<>(false, comentarioServicio.calcularPuntuacion(codigoNegocio)));
     }

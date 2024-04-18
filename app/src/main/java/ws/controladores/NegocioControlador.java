@@ -98,12 +98,12 @@ public class NegocioControlador {
         return ResponseEntity.ok().body( new MensajeDTO<>(false, "Puntuacion agregada"));
     }
 
-    @GetMapping("/ordenarUbicacion")
+    @GetMapping("/ordenar-ubicacion")
     public ResponseEntity<MensajeDTO<List<ItemNegocioDTO>>> ordenarUbicacion(@Valid @RequestBody Ubicacion ubicacion, List<ItemNegocioDTO> listaNegocios)throws Exception{
         return ResponseEntity.ok().body( new MensajeDTO<>(false, negocioServicio.ordenarUbicacion(ubicacion, listaNegocios)));
     }
 
-    @GetMapping("/ordenarUbicacion")
+    @GetMapping("/ordenar-popularidad")
     public ResponseEntity<MensajeDTO<List<ItemNegocioDTO>>> ordenarPuntuacion(@Valid @RequestBody List<ItemNegocioDTO> listaNegocios)throws Exception{
         return ResponseEntity.ok().body( new MensajeDTO<>(false, negocioServicio.ordenarPuntuacion(listaNegocios)));
     }

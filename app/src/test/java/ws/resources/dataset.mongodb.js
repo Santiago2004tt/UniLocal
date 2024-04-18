@@ -74,8 +74,8 @@ db.Negocios.insertMany([
         historialRevisiones: [],
         horarios: [
             {
-                horaInicio: ISODate('2024-04-07T03:55:06.484Z'),
-                horaFin: ISODate('2024-04-07T03:55:06.484Z'),
+                horaInicio: 10,
+                horaFin: 17,
                 dia: 'SUNDAY'
             }
         ],
@@ -104,8 +104,8 @@ db.Negocios.insertMany([
         historialRevisiones: [],
         horarios: [
             {
-                horaInicio: ISODate('2024-04-07T03:55:06.484Z'),
-                horaFin: ISODate('2024-04-07T03:55:06.484Z'),
+                horaInicio: 14,
+                horaFin: 19,
                 dia: 'MONDAY'
             }
         ],

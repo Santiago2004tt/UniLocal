@@ -43,7 +43,7 @@ public class ReportesControlador {
         return ResponseEntity.ok().body( new MensajeDTO<>(false, reporteServicio.obtenerReporte(codigoReporte)));
     }
 
-    @GetMapping("/obtener-cliente/{codigo}")
+    @GetMapping("/listar-reportes")
     public ResponseEntity<MensajeDTO<List<ItemReporteDTO>>> listarReportes()throws Exception{
         return ResponseEntity.ok().body( new MensajeDTO<>(false, reporteServicio.listarReportes()));
     }
