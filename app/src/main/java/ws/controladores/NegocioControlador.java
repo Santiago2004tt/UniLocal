@@ -17,8 +17,9 @@ import ws.dto.ActualizarNegocioDTO;
 import ws.dto.DetalleNegocioDTO;
 import ws.dto.ItemNegocioDTO;
 import ws.dto.MensajeDTO;
+import ws.dto.PopularidadDTO;
 import ws.dto.RegistrarNegocioDTO;
-import ws.model.entidades.Ubicacion;
+import ws.dto.UbicacionActualDTO;
 import ws.servicios.interfaces.NegocioServicio;
 
 @RestController
@@ -47,8 +48,8 @@ public class NegocioControlador {
     }
 
     @GetMapping("/recomendar-lugares")
-    public ResponseEntity<MensajeDTO<List<ItemNegocioDTO>>> recomendarLugares(@Valid @RequestBody String codigoUsuario, Ubicacion ubicacion)throws Exception{
-        return ResponseEntity.ok().body( new MensajeDTO<>(false, negocioServicio.recomendarLugares(codigoUsuario, ubicacion)));
+    public ResponseEntity<MensajeDTO<List<ItemNegocioDTO>>> recomendarLugares(@Valid @RequestBody UbicacionActualDTO ubicacionActualDTO)throws Exception{
+        return ResponseEntity.ok().body( new MensajeDTO<>(false, negocioServicio.recomendarLugares(ubicacionActualDTO.codigoUsuario(), ubicacionActualDTO.ubicacion())));
     }
 
     @GetMapping("/obtener-negocio/{codigoNegocio}")
@@ -74,13 +75,13 @@ public class NegocioControlador {
     }
 
     @GetMapping("/listar-negocios-favoritos")
-    public ResponseEntity<MensajeDTO<List<ItemNegocioDTO>>> listarNegociosFavoritos(@Valid @RequestBody String codigoCliente, Ubicacion ubicacion)throws Exception{
-        return ResponseEntity.ok().body( new MensajeDTO<>(false, negocioServicio.listarNegociosFavoritos(codigoCliente, ubicacion)));
+    public ResponseEntity<MensajeDTO<List<ItemNegocioDTO>>> listarNegociosFavoritos(@Valid @RequestBody  UbicacionActualDTO ubicacionActualDTO)throws Exception{
+        return ResponseEntity.ok().body( new MensajeDTO<>(false, negocioServicio.listarNegociosFavoritos(ubicacionActualDTO.codigoUsuario(), ubicacionActualDTO.ubicacion())));
     }
 
     @PutMapping("/agregar-puntuacion")
-    public ResponseEntity<MensajeDTO<String>> agregarPuntuacion(@Valid @RequestBody String codigoNegocio, int puntuacion)throws Exception{
-        negocioServicio.agregarPuntuacion(codigoNegocio, puntuacion);
+    public ResponseEntity<MensajeDTO<String>> agregarPuntuacion(@Valid @RequestBody PopularidadDTO popularidadDTO)throws Exception{
+        negocioServicio.agregarPuntuacion(popularidadDTO.codigoNegocio(), popularidadDTO.puntuacion());
         return ResponseEntity.ok().body( new MensajeDTO<>(false, "Puntuacion agregada"));
     }
 

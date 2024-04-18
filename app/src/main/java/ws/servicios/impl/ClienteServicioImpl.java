@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import ws.dto.ActualizarClienteDTO;
 import ws.dto.CambioPasswordDTO;
 import ws.dto.DetalleClienteDTO;
-import ws.dto.DetalleComentarioDTO;
 import ws.dto.EmailDTO;
 import ws.dto.RegistrarBloqueoDTO;
 import ws.dto.RegistrarClienteDTO;
@@ -27,7 +26,6 @@ import ws.model.enums.EstadoRegistro;
 import ws.repositorio.ClienteRepo;
 import ws.servicios.interfaces.AutenticacionServicio;
 import ws.servicios.interfaces.ClienteServicio;
-import ws.servicios.interfaces.ComentarioServicio;
 import ws.servicios.interfaces.EmailServicio;
 import ws.utils.BodyEmailUtil;
 
@@ -40,8 +38,6 @@ public class ClienteServicioImpl implements ClienteServicio{
     
     @Autowired
     private final EmailServicio emailServicio;
-
-    private final ComentarioServicio comentarioServicio;
 
     @Autowired
     private final AutenticacionServicio autenticacionServicio;
@@ -183,13 +179,13 @@ public class ClienteServicioImpl implements ClienteServicio{
     }
 
     /**
-     * metodo para listar a todos los clientes
+     * 
      */
     @Override
     public void agregarBloqueo(RegistrarBloqueoDTO registrarBloqueoDTO) throws Exception{
-        Bloqueo bloqueo = new Bloqueo(registrarBloqueoDTO.fechaInicio(),registrarBloqueoDTO.fechaFinal(), registrarBloqueoDTO.codigoModerado(), registrarBloqueoDTO.motivo());
-        DetalleComentarioDTO detalleComentarioDTO = comentarioServicio.obtenerComentario(registrarBloqueoDTO.codigoComentario());
-        Optional<Cliente> clienteOptional = clienteRepo.findById(detalleComentarioDTO.codigoCliente());
+        Bloqueo bloqueo = new Bloqueo(registrarBloqueoDTO.fechaInicio(),registrarBloqueoDTO.fechaFinal(), registrarBloqueoDTO.codigoModerador(), registrarBloqueoDTO.motivo());
+        //DetalleComentarioDTO detalleComentarioDTO = comentarioServicio.obtenerComentario(registrarBloqueoDTO.codigoComentario());
+        Optional<Cliente> clienteOptional = clienteRepo.findById(registrarBloqueoDTO.codigoCliente());
         
         if(clienteOptional.isEmpty()){
             throw new Exception("El cliente no se a encontrado");

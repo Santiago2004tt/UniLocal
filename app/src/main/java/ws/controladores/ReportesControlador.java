@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import ws.dto.CambiarEstadoReporte;
 import ws.dto.DetalleReporteDTO;
 import ws.dto.ItemReporteDTO;
 import ws.dto.MensajeDTO;
 import ws.dto.RegistrarReporteDTO;
-import ws.model.enums.EstadoReporte;
 import ws.servicios.interfaces.ReporteServicio;
 
 @RestController
@@ -34,8 +34,8 @@ public class ReportesControlador {
     }
     
     @PutMapping("/actualizar-perfil")
-    public ResponseEntity<MensajeDTO<String>> cambiarEstado(@Valid @RequestBody String codigoReporte, EstadoReporte estadoReporte)throws Exception{
-        reporteServicio.cambiarEstado(codigoReporte, estadoReporte);
+    public ResponseEntity<MensajeDTO<String>> cambiarEstado(@Valid @RequestBody CambiarEstadoReporte cambiarEstadoReporte)throws Exception{
+        reporteServicio.cambiarEstado(cambiarEstadoReporte.codigoReporte(), cambiarEstadoReporte.estadoReporte());
         return ResponseEntity.ok().body( new MensajeDTO<>(false, "Reporte actualizado"));
     }
 

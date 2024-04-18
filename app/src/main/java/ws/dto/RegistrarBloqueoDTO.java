@@ -11,7 +11,8 @@ public record RegistrarBloqueoDTO(
         @NotNull LocalDateTime fechaFinal,
         @NotBlank String motivo,
         @NotBlank String codigoComentario,
-        @NotBlank String codigoModerado,
+        @NotBlank String codigoCliente,
+        @NotBlank String codigoModerador,
         @NotBlank String codigoReporte
         ) {
 

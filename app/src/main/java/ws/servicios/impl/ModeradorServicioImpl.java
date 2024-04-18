@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import ws.dto.ActualizarNegocioDTO;
 import ws.dto.CambioPasswordDTO;
-import ws.dto.DetalleClienteDTO;
 import ws.dto.DetalleComentarioDTO;
 import ws.dto.DetalleModerador;
 import ws.dto.DetalleNegocioDTO;
@@ -149,7 +148,7 @@ public class ModeradorServicioImpl implements ModeradorServicio {
         DetalleComentarioDTO detalleComentarioDTO = comentarioServicio.obtenerComentario(registrarBloqueoDTO.codigoComentario());
         clienteServicio.obtenerCliente(detalleComentarioDTO.codigoCliente());
         Bloqueo bloqueo = new Bloqueo();
-        bloqueo.setCodigoModerador(registrarBloqueoDTO.codigoModerado());
+        bloqueo.setCodigoModerador(detalleComentarioDTO.codigoCliente());
         bloqueo.setFechaInicio(registrarBloqueoDTO.fechaInicio());
         bloqueo.setMotivo(registrarBloqueoDTO.motivo());
         bloqueo.setFechaFinal(registrarBloqueoDTO.fechaFinal());
