@@ -147,18 +147,18 @@ public class ModeradorServicioImpl implements ModeradorServicio {
     @Override
     public void aceptarPeticionComentario(RegistrarBloqueoDTO registrarBloqueoDTO )throws Exception {
         DetalleComentarioDTO detalleComentarioDTO = comentarioServicio.obtenerComentario(registrarBloqueoDTO.codigoComentario());
-        DetalleClienteDTO detalleClienteDTO = clienteServicio.obtenerCliente(detalleComentarioDTO.codigoCliente());
+        clienteServicio.obtenerCliente(detalleComentarioDTO.codigoCliente());
         Bloqueo bloqueo = new Bloqueo();
         bloqueo.setCodigoModerador(registrarBloqueoDTO.codigoModerado());
         bloqueo.setFechaInicio(registrarBloqueoDTO.fechaInicio());
         bloqueo.setMotivo(registrarBloqueoDTO.motivo());
         bloqueo.setFechaFinal(registrarBloqueoDTO.fechaFinal());
-        
+        comentarioServicio.eliminarComentario(registrarBloqueoDTO.codigoComentario());
         
         reporteServicio.cambiarEstado(registrarBloqueoDTO.codigoReporte(), EstadoReporte.APROBADO);
 
-
-        clienteServicio.agregarBloqueo(detalleClienteDTO.codigo(), bloqueo);
+        
+        clienteServicio.agregarBloqueo(registrarBloqueoDTO);
     }
 
     @Override

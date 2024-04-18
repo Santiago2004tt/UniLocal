@@ -60,6 +60,85 @@ public class FiltroToken extends OncePerRequestFilter {
                 } else {
                     error = false;
                 }
+
+                if (requestURI.startsWith("/api/negocios-pivados")) {
+                    if (token != null) {
+                        Jws<Claims> jws = jwtUtils.parseJwt(token);
+                        if (!(jws.getPayload().get("rol").equals("CLIENTE")||jws.getPayload().get("rol").equals("MODERADOR"))) {
+                            crearRespuestaError("No tiene permisos para acceder a este recurso",
+
+                                    HttpServletResponse.SC_FORBIDDEN, response);
+                        } else {
+                            error = false;
+                        }
+                    } else {
+                        crearRespuestaError("No tiene permisos para acceder a este recurso",
+                                HttpServletResponse.SC_FORBIDDEN, response);
+
+                    }
+                } else {
+                    error = false;
+                }
+
+                if (requestURI.startsWith("/api/comentarios")) {
+                    if (token != null) {
+                        Jws<Claims> jws = jwtUtils.parseJwt(token);
+                        if (!(jws.getPayload().get("rol").equals("CLIENTE")||jws.getPayload().get("rol").equals("MODERADOR"))) {
+                            crearRespuestaError("No tiene permisos para acceder a este recurso",
+
+                                    HttpServletResponse.SC_FORBIDDEN, response);
+                        } else {
+                            error = false;
+                        }
+                    } else {
+                        crearRespuestaError("No tiene permisos para acceder a este recurso",
+                                HttpServletResponse.SC_FORBIDDEN, response);
+
+                    }
+                } else {
+                    error = false;
+                }
+
+
+                if (requestURI.startsWith("/api/reportes")) {
+                    if (token != null) {
+                        Jws<Claims> jws = jwtUtils.parseJwt(token);
+                        if (!jws.getPayload().get("rol").equals("CLIENTE")) {
+                            crearRespuestaError("No tiene permisos para acceder a este recurso",
+
+                                    HttpServletResponse.SC_FORBIDDEN, response);
+                        } else {
+                            error = false;
+                        }
+                    } else {
+                        crearRespuestaError("No tiene permisos para acceder a este recurso",
+                                HttpServletResponse.SC_FORBIDDEN, response);
+
+                    }
+                } else {
+                    error = false;
+                }
+
+                if (requestURI.startsWith("/api/moderadores")) {
+                    if (token != null) {
+                        Jws<Claims> jws = jwtUtils.parseJwt(token);
+                        if (!jws.getPayload().get("rol").equals("MODERADOR")) {
+                            crearRespuestaError("No tiene permisos para acceder a este recurso",
+
+                                    HttpServletResponse.SC_FORBIDDEN, response);
+                        } else {
+                            error = false;
+                        }
+                    } else {
+                        crearRespuestaError("No tiene permisos para acceder a este recurso",
+                                HttpServletResponse.SC_FORBIDDEN, response);
+
+                    }
+                } else {
+                    error = false;
+                }
+
+                
                 // Agregar más validaciones para otros roles y recursos (rutas de la API) aquí
             } catch (MalformedJwtException | SignatureException e) {
                 crearRespuestaError("El token es incorrecto",

@@ -2,14 +2,18 @@ package ws.controladores;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import ws.dto.AceptarNegociosDTO;
 import ws.dto.DetalleModerador;
 import ws.dto.MensajeDTO;
+import ws.dto.RechazarComentarioDTO;
+import ws.dto.RechazarNegociosDTO;
 import ws.dto.RegistrarBloqueoDTO;
 import ws.servicios.interfaces.ModeradorServicio;
 
@@ -21,14 +25,14 @@ public class ModeradorControlador {
     private final ModeradorServicio moderadorServicio;
 
     @PutMapping("/aceptar-peticion-negocio")
-    public ResponseEntity<MensajeDTO<String>> aceptarPeticionNegocio(@Valid @RequestBody String codigoNegocio, String codigo)throws Exception{
-        moderadorServicio.aceptarPeticionNegocio(codigoNegocio,codigo);
+    public ResponseEntity<MensajeDTO<String>> aceptarPeticionNegocio(@Valid @RequestBody AceptarNegociosDTO aceptarNegociosDTO)throws Exception{
+        moderadorServicio.aceptarPeticionNegocio(aceptarNegociosDTO.codigoNegocio(),aceptarNegociosDTO.codigoModerador());
         return ResponseEntity.ok().body( new MensajeDTO<>(false, "Negocio aceptado"));
     }
 
     @PutMapping("/rechazar-peticion-negocio")
-    public ResponseEntity<MensajeDTO<String>> rechazarPeticionNegocio(@Valid @RequestBody String codigoNegocio, String codigo, String mensaje)throws Exception{
-        moderadorServicio.rechazarPeticionNegocio(codigoNegocio, codigo, mensaje);
+    public ResponseEntity<MensajeDTO<String>> rechazarPeticionNegocio(@Valid @RequestBody RechazarNegociosDTO rechazarNegociosDTO)throws Exception{
+        moderadorServicio.rechazarPeticionNegocio(rechazarNegociosDTO.codigoNegocio(), rechazarNegociosDTO.codigoModerador(), rechazarNegociosDTO.mensaje());
         return ResponseEntity.ok().body( new MensajeDTO<>(false, "Negocio rechazado"));
     }
 
@@ -39,13 +43,13 @@ public class ModeradorControlador {
     }
 
     @PutMapping("/rechazar-peticion-comentario")
-    public ResponseEntity<MensajeDTO<String>> rechazarPeticionComentario(@Valid @RequestBody String codigoNegocio, String codigo)throws Exception{
-        moderadorServicio.rechazarPeticionComentario(codigoNegocio, codigo);
+    public ResponseEntity<MensajeDTO<String>> rechazarPeticionComentario(@Valid @RequestBody RechazarComentarioDTO rechazarComentarioDTO)throws Exception{
+        moderadorServicio.rechazarPeticionComentario(rechazarComentarioDTO.codigoComentario(), rechazarComentarioDTO.codigoModerador());
         return ResponseEntity.ok().body( new MensajeDTO<>(false, "Comentario rechazado"));
     }
 
-    @GetMapping("/obtener-moderador/{codigo}")
-    public ResponseEntity<MensajeDTO<DetalleModerador>> obtenerModerador(@Valid @RequestBody String codigoModerador)throws Exception{
+    @GetMapping("/obtener-moderador/{codigoModerador}")
+    public ResponseEntity<MensajeDTO<DetalleModerador>> obtenerModerador(@PathVariable("codigoModerador") String codigoModerador)throws Exception{
         return ResponseEntity.ok().body( new MensajeDTO<>(false, moderadorServicio.obtenerModerador(codigoModerador) ));
     }
 }

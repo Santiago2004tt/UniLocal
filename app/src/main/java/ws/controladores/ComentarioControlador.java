@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,8 +49,8 @@ public class ComentarioControlador {
         return ResponseEntity.ok().body( new MensajeDTO<>(false, comentarioServicio.listarComentarios(codigoNegocio)));
     }
 
-    @GetMapping("/obtener-comentario/{codigo}")
-    public ResponseEntity<MensajeDTO<DetalleComentarioDTO>> obtenerComentario(@Valid @RequestBody String codigoComentario)throws Exception{
+    @GetMapping("/obtener-comentario/{codigoComentario}")
+    public ResponseEntity<MensajeDTO<DetalleComentarioDTO>> obtenerComentario(@PathVariable("codigoComentario") String codigoComentario)throws Exception{
         return ResponseEntity.ok().body( new MensajeDTO<>(false, comentarioServicio.obtenerComentario(codigoComentario)));
 
     }

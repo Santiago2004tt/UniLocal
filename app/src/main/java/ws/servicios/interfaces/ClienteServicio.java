@@ -3,8 +3,8 @@ package ws.servicios.interfaces;
 
 import ws.dto.ActualizarClienteDTO;
 import ws.dto.DetalleClienteDTO;
+import ws.dto.RegistrarBloqueoDTO;
 import ws.dto.RegistrarClienteDTO;
-import ws.model.entidades.Bloqueo;
 
 
 public interface ClienteServicio extends CuentaServicio{
@@ -17,7 +17,7 @@ public interface ClienteServicio extends CuentaServicio{
     
     void eliminarCliente(String codigoCliente) throws Exception;
     
-    void agregarBloqueo(String codigoCliente, Bloqueo bloqueo)throws Exception;
+    void agregarBloqueo(RegistrarBloqueoDTO registrarBloqueoDTO)throws Exception;
     
     void guardarFavorito(String codigoCliente, String codigoNegocio)throws Exception;
     
