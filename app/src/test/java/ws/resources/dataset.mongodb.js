@@ -152,5 +152,14 @@ db.Moderadores.insertMany([
         email: 'hola@gmail.com',
         estadoRegistro: 'ACTIVO',
         _class: 'ws.model.documentos.Moderadores'
+    },
+
+    {
+        _id: 'Moderador1',
+        nombre: 'Jere',
+        password: '$2a$10$FCB5OTZS/f7Dm5hHxTs/XuYmDHJJsCuC49p2vFCEl.onG69ozIE3G',
+        email: 'moderador@gmail.com',
+        estadoRegistro: 'ACTIVO',
+        _class: 'ws.model.documentos.Moderador'
     }
 ])

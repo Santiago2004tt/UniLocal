@@ -58,20 +58,14 @@ public class NegocioControlador {
     }
 
 
-    @GetMapping("/listar-negocios-propietario")
-    public ResponseEntity<MensajeDTO<List<ItemNegocioDTO>>> listarNegocioPropietario(@Valid @RequestBody String codigoCliente)throws Exception{
+    @GetMapping("/listar-negocios-propietario/{codigoCliente}")
+    public ResponseEntity<MensajeDTO<List<ItemNegocioDTO>>> listarNegocioPropietario(@PathVariable("codigoCliente") String codigoCliente)throws Exception{
         return ResponseEntity.ok().body( new MensajeDTO<>(false, negocioServicio.listarNegocioPropietario(codigoCliente)));
     }
 
     @GetMapping("/listar-peticiones")
     public ResponseEntity<MensajeDTO<List<ItemNegocioDTO>>> listarPeticiones()throws Exception{
         return ResponseEntity.ok().body( new MensajeDTO<>(false, negocioServicio.listarPeticiones()));
-    }
-
-    @PutMapping("/finalizar-tiempo-espera")
-    public ResponseEntity<MensajeDTO<String>> finalizarTiempoEspera()throws Exception{
-        negocioServicio.finalizarTiempoEspera();
-        return ResponseEntity.ok().body( new MensajeDTO<>(false, "Negocio finalizado"));
     }
 
     @GetMapping("/listar-negocios-favoritos")

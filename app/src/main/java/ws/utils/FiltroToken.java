@@ -103,7 +103,7 @@ public class FiltroToken extends OncePerRequestFilter {
                 if (requestURI.startsWith("/api/reportes")) {
                     if (token != null) {
                         Jws<Claims> jws = jwtUtils.parseJwt(token);
-                        if (!jws.getPayload().get("rol").equals("CLIENTE")) {
+                        if (!(jws.getPayload().get("rol").equals("CLIENTE") || jws.getPayload().get("rol").equals("MODERADOR"))) {
                             crearRespuestaError("No tiene permisos para acceder a este recurso",
 
                                     HttpServletResponse.SC_FORBIDDEN, response);

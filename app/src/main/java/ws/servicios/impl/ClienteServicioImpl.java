@@ -38,14 +38,8 @@ public class ClienteServicioImpl implements ClienteServicio{
     
     @Autowired
     private final EmailServicio emailServicio;
-
-    @Autowired
-    private final AutenticacionServicio autenticacionServicio;
     
-    @Override
-    public void iniciarSesion(SessionDTO sessionDTO) throws Exception {
-        autenticacionServicio.iniciarSesionCliente(sessionDTO);
-    }
+
 
     @Override
     public String enviarCodigoRecuperacion(String email) throws Exception {
@@ -159,7 +153,7 @@ public class ClienteServicioImpl implements ClienteServicio{
 
         Cliente cliente = optionalCLiente.get();
 
-        return new DetalleClienteDTO(cliente.getNombre(), cliente.getPassword(), cliente.getEmail(), cliente.getFotoPerfil(),cliente.getNickname() , cliente.getCiudad(), cliente.getTelefonos(), cliente.getHistorial(), cliente.getFavortios(), cliente.getBloqueos());
+        return new DetalleClienteDTO(cliente.getPassword(),cliente.getNombre(), cliente.getEmail(), cliente.getFotoPerfil(),cliente.getNickname() , cliente.getCiudad(), cliente.getTelefonos(), cliente.getHistorial(), cliente.getFavortios(), cliente.getBloqueos());
     }
 
     /**

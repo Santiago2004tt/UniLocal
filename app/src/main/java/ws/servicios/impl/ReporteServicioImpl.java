@@ -76,7 +76,7 @@ public class ReporteServicioImpl implements ReporteServicio{
 
     @Override
     public List<ItemReporteDTO> listarReportes()throws Exception {
-        List<Reporte> listarReportes = reporteRepo.findAll();
+        List<Reporte> listarReportes = reporteRepo.findByEstadoReporte(EstadoReporte.PENDIENTE);
         List<ItemReporteDTO> itemsReporteDTO = new ArrayList<>();
         if(listarReportes.isEmpty()){
             throw new Exception("No se encontraron reportes");

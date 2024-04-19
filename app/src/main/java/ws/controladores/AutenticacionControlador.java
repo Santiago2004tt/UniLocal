@@ -26,4 +26,10 @@ public class AutenticacionControlador {
         TokenDTO tokenDTO = autenticacionServicio.iniciarSesionCliente(loginDTO);
         return ResponseEntity.ok().body(new MensajeDTO<>(false, tokenDTO));
     }
+
+    @PostMapping("/login-moderador")
+    public ResponseEntity<MensajeDTO<TokenDTO>> iniciarSesionModerador(@Valid @RequestBody SessionDTO loginDTO) throws Exception {
+        TokenDTO tokenDTO = autenticacionServicio.iniciarSesionModerador(loginDTO);
+        return ResponseEntity.ok().body(new MensajeDTO<>(false, tokenDTO));
+    }
 }

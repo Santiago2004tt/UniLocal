@@ -33,8 +33,8 @@ public class ComentarioControlador {
         return ResponseEntity.ok().body( new MensajeDTO<>(false, "Comentario registrado correctamente"));
     }
     
-    @PutMapping("/eliminar-comentario")
-    public ResponseEntity<MensajeDTO<String>> eliminarComentario(@Valid @RequestBody String codigoComentario) throws Exception{
+    @PutMapping("/eliminar-comentario/{codigoComentario}")
+    public ResponseEntity<MensajeDTO<String>> eliminarComentario(@PathVariable("codigoComentario") String codigoComentario) throws Exception{
         comentarioServicio.eliminarComentario(codigoComentario);
         return ResponseEntity.ok().body( new MensajeDTO<>(false, "Comentario eliminado correctamente"));
     }
@@ -44,8 +44,8 @@ public class ComentarioControlador {
         return ResponseEntity.ok().body( new MensajeDTO<>(false, comentarioServicio.responderComentario(actualizarComentarioDTO)));
     }
 
-    @GetMapping("/listar-comentarios")
-    public ResponseEntity<MensajeDTO<List<ItemComentarioDTO>>> listarComentarios(@Valid @RequestBody String codigoNegocio)throws Exception{
+    @GetMapping("/listar-comentarios/{codigoNegocio}")
+    public ResponseEntity<MensajeDTO<List<ItemComentarioDTO>>> listarComentarios(@PathVariable("codigoNegocio") String codigoNegocio)throws Exception{
         return ResponseEntity.ok().body( new MensajeDTO<>(false, comentarioServicio.listarComentarios(codigoNegocio)));
     }
 
@@ -55,8 +55,8 @@ public class ComentarioControlador {
 
     }
 
-    @GetMapping("/calcular-puntuacion")
-    public ResponseEntity<MensajeDTO<Integer>> calcularPuntuacion(@Valid @RequestBody String codigoNegocio)throws Exception{
+    @GetMapping("/calcular-puntuacion/{codigoNegocio}")
+    public ResponseEntity<MensajeDTO<Integer>> calcularPuntuacion(@PathVariable("codigoNegocio") String codigoNegocio)throws Exception{
         return ResponseEntity.ok().body( new MensajeDTO<>(false, comentarioServicio.calcularPuntuacion(codigoNegocio)));
     }
 }

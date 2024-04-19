@@ -18,7 +18,6 @@ import ws.dto.DetalleModerador;
 import ws.dto.DetalleNegocioDTO;
 import ws.dto.EmailDTO;
 import ws.dto.RegistrarBloqueoDTO;
-import ws.dto.SessionDTO;
 import ws.model.entidades.Bloqueo;
 import ws.model.entidades.HistorialRevision;
 import ws.model.enums.EstadoNegocio;
@@ -41,28 +40,18 @@ public class ModeradorServicioImpl implements ModeradorServicio {
 
     private final ModeradorRepo moderadorRepo;
 
-    @Autowired
     private final ClienteServicio clienteServicio;
 
-    @Autowired
     private final ComentarioServicio comentarioServicio;
 
-    @Autowired
     private final NegocioServicio negocioServicio;
 
-    @Autowired
     private final ReporteServicio reporteServicio;
-
-    @Autowired
+ 
     private final EmailServicio emailServicio;
 
-    @Autowired
-    private final AutenticacionServicio autenticacionServicio;
+   
     
-    @Override
-    public void iniciarSesion(SessionDTO SessionDTO) throws Exception {
-        autenticacionServicio.iniciarSesionCliente(SessionDTO);
-    }
 
     @Override
     public String enviarCodigoRecuperacion(String email) throws Exception {

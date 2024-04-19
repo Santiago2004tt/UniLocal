@@ -17,6 +17,7 @@ import ws.model.documentos.Cliente;
 import ws.model.entidades.Bloqueo;
 import ws.model.enums.EstadoRegistro;
 import ws.repositorio.ClienteRepo;
+import ws.servicios.interfaces.AutenticacionServicio;
 import ws.servicios.interfaces.ClienteServicio;
 
 @SpringBootTest
@@ -28,6 +29,8 @@ public class ClienteTest {
     @Autowired
     private ClienteServicio clienteServicioImpl;
     
+    @Autowired
+    private AutenticacionServicio autenticacionServicio;
 
 
     @Test
@@ -144,7 +147,7 @@ public class ClienteTest {
     public void iniciarSesion(){
         try{
             SessionDTO sessionDTO = new SessionDTO("santisbb2004@gmail.com", "pepito");
-            clienteServicioImpl.iniciarSesion(sessionDTO);
+            autenticacionServicio.iniciarSesionCliente(sessionDTO);
         }catch(Exception e){
             fail(e);
         }
@@ -154,7 +157,7 @@ public class ClienteTest {
     public void iniciarSesionFallido(){
         try{
             SessionDTO sessionDTO = new SessionDTO("santisbb2004@gmail.com", "pepitoo");
-            clienteServicioImpl.iniciarSesion(sessionDTO);
+            autenticacionServicio.iniciarSesionCliente(sessionDTO);
             fail();
         }catch(Exception e){
             assertEquals(e.getMessage(), "La contraseña es incorrecta");

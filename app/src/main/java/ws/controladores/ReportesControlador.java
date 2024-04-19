@@ -6,14 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import ws.dto.CambiarEstadoReporte;
 import ws.dto.DetalleReporteDTO;
 import ws.dto.ItemReporteDTO;
 import ws.dto.MensajeDTO;
@@ -27,19 +25,13 @@ public class ReportesControlador {
 
     private final ReporteServicio reporteServicio;
 
-    @PostMapping("/registrar-cliente")
+    @PostMapping("/registrar-reporte")
     public ResponseEntity<MensajeDTO<String>> generarReporte(@Valid @RequestBody RegistrarReporteDTO reporteDTO)throws Exception{
         reporteServicio.generarReporte(reporteDTO);
         return ResponseEntity.ok().body( new MensajeDTO<>(false, "Reporte generado"));
     }
-    
-    @PutMapping("/actualizar-perfil")
-    public ResponseEntity<MensajeDTO<String>> cambiarEstado(@Valid @RequestBody CambiarEstadoReporte cambiarEstadoReporte)throws Exception{
-        reporteServicio.cambiarEstado(cambiarEstadoReporte.codigoReporte(), cambiarEstadoReporte.estadoReporte());
-        return ResponseEntity.ok().body( new MensajeDTO<>(false, "Reporte actualizado"));
-    }
 
-    @GetMapping("/obtener-cliente/{codigoReporte}")
+    @GetMapping("/obtener-reporte/{codigoReporte}")
     public ResponseEntity<MensajeDTO<DetalleReporteDTO>> obtenerReporte(@PathVariable("codigoReporte") String codigoReporte)throws Exception{
         return ResponseEntity.ok().body( new MensajeDTO<>(false, reporteServicio.obtenerReporte(codigoReporte)));
     }
