@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +41,7 @@ public class NegociosPublicosControlador {
         return ResponseEntity.ok().body( new MensajeDTO<>(false, negocioServicio.obtenerNegocioActivo(codigoNegocio)));
     }
 
-    @GetMapping("/buscar-negocio")
+    @PostMapping("/buscar-negocio")
     public ResponseEntity<MensajeDTO<List<ItemNegocioDTO>>> buscarNegocio(@Valid @RequestBody BuscarNegocioDTO buscarNegocioDTO) throws Exception{
         return ResponseEntity.ok().body( new MensajeDTO<>(false, negocioServicio.buscarNegocio(buscarNegocioDTO)));
     }

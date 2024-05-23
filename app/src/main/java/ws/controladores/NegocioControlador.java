@@ -47,7 +47,7 @@ public class NegocioControlador {
         return ResponseEntity.ok().body( new MensajeDTO<>(false, "Negocio eliminado"));
     }
 
-    @GetMapping("/recomendar-lugares")
+    @PostMapping("/recomendar-lugares")
     public ResponseEntity<MensajeDTO<List<ItemNegocioDTO>>> recomendarLugares(@Valid @RequestBody UbicacionActualDTO ubicacionActualDTO)throws Exception{
         return ResponseEntity.ok().body( new MensajeDTO<>(false, negocioServicio.recomendarLugares(ubicacionActualDTO.codigoUsuario(), ubicacionActualDTO.ubicacion())));
     }
@@ -68,7 +68,7 @@ public class NegocioControlador {
         return ResponseEntity.ok().body( new MensajeDTO<>(false, negocioServicio.listarPeticiones()));
     }
 
-    @GetMapping("/listar-negocios-favoritos")
+    @PostMapping("/listar-negocios-favoritos")
     public ResponseEntity<MensajeDTO<List<ItemNegocioDTO>>> listarNegociosFavoritos(@Valid @RequestBody  UbicacionActualDTO ubicacionActualDTO)throws Exception{
         return ResponseEntity.ok().body( new MensajeDTO<>(false, negocioServicio.listarNegociosFavoritos(ubicacionActualDTO.codigoUsuario(), ubicacionActualDTO.ubicacion())));
     }
